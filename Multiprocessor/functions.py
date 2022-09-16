@@ -18,7 +18,7 @@ def poissonDistribution():
 
 """
 This function returns an specific operation based on the poisson
-probability
+distribution
 """
 def getInstruction(probability):
 
@@ -36,7 +36,7 @@ def getInstruction(probability):
 
 """
 This function returns an specific memory direction based on the
-poisson probability
+poisson distribution
 """
 def getMemoryDirection(probability):
 
@@ -81,11 +81,18 @@ def getMemoryDirection(probability):
 		return MEMORY_BLOCKS_DIR[7]
 
 """
-This function generates a random hex number of 4 bits
+This function generates a hex number of 4 bits based on poisson
+distribution
 """
 def getValue():
     
-    return hex(randint(0, VALUE_MAX))
+	probability = trunc(poissonDistribution() * 10000)
+
+	while(probability > VALUE_MAX):
+    
+		probability = trunc(poissonDistribution() * 10000)
+
+	return hex(probability)
 
 """
 This function indicates to a processor to generate a new instruction
