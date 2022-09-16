@@ -1,3 +1,6 @@
+RANDOM_MIN = 1
+RANDOM_MAX = 21
+
 OPERATIONS = ["READ",
               "WRITE",
               "CALC"]
