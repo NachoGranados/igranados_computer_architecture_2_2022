@@ -16,6 +16,40 @@ def binomialDistribution(n, x, p):
 
 	return probability
 
+
+
+
+
+
+"""
+This function calculates the binomial distribution based on
+n number of trials, x number of successes and p probability
+of getting a success
+"""
+def poissonDistribution(m, x):
+    
+	probability = (pow(m, x) * exp(-m)) / factorial(x)
+
+	return probability
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+"""
 # generate random value for binomial distribution
 n = randint(RANDOM_MIN, RANDOM_MAX)
 x = n
@@ -28,7 +62,52 @@ while(x >= n):
 # calculate probability in percentage
 probability = binomialDistribution(n, x, p) * 100
 
-print("n = ", n)
-print("p = ", p)
-print("x = ", x)
-print("binomial = ", probability)
+#print("n = ", n)
+#print("p = ", p)
+#print("x = ", x)
+#print("binomial = ", trunc(probability))
+
+if(probability >= 0 and probability < 50/3):
+    print("CALC")
+elif(probability >= 50/3 and probability < 2*(50/3)):
+    print("READ")
+else:
+    print("WRITE")
+"""
+
+
+
+
+
+
+for i in range(0,5):
+	# generate random value for binomial distribution
+	m = randint(RANDOM_MIN, RANDOM_MAX)
+	x = randint(RANDOM_MIN, RANDOM_MAX)
+	#x = n
+	#p = random()
+
+	"""
+	# check that x is less than n
+	while(x >= n):
+		x = randint(RANDOM_MIN, RANDOM_MAX)
+	"""		
+
+	# calculate probability in percentage
+	#probability = binomialDistribution(n, x, p) * 100
+	probability = poissonDistribution(m, x) * 100
+
+	#print("n = ", n)
+	#print("p = ", p)
+	#print("x = ", x)
+	print("poisson = ", probability)
+
+	if(probability >= 0 and probability < 20/3):
+		print("CALC")
+	elif(probability >= 20/3 and probability < 2*(20/3)):
+		print("READ")
+	else:
+		print("WRITE")
+
+	print("----------")
+

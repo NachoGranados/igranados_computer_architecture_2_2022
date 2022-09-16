@@ -1,5 +1,5 @@
 RANDOM_MIN = 1
-RANDOM_MAX = 21
+RANDOM_MAX = 14
 
 OPERATIONS = ["READ",
               "WRITE",
