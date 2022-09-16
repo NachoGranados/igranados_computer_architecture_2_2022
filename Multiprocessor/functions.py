@@ -87,8 +87,16 @@ def getValue():
     
     return hex(randint(0, VALUE_MAX))
 
+"""
+This function indicates to a processor to generate a new instruction
+"""
+def threadFunction(processor):
+    
+	instruction = processor.generateInstruction()
 
-
+	print(instruction)
+    
+	return instruction
 
 
 
