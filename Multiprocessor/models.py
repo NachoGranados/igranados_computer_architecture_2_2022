@@ -1,28 +1,40 @@
+# libraries
+from constants import *
+from functions import *
 class Processor:
 
     def __init__(self, number):        
         self.number = number
+
+    def generateInstruction(self):
         
-    def getNumber(self):
-        return self.number
+        processorNumber = "P" + str(self.number) + ": "
 
-    def setNumber(self, number):
-        self.number = number
+        instruction = getInstruction(poissonDistribution())
 
-    def generateProcessingInstruction(self):
+        # calc instruction
+        if(instruction == OPERATIONS[0]):
+
+            return processorNumber + instruction
+
+        # read instruction
+        elif(instruction == OPERATIONS[1]):
+
+            memoryDir = " " + getMemoryDirection(poissonDistribution())
+
+            return processorNumber + instruction + memoryDir
+
+        # write operation
+        elif(instruction == OPERATIONS[2]):
+
+            memoryDir = " " + getMemoryDirection(poissonDistribution()) + "; "
+
+            value = getValue()
+
+            return processorNumber + instruction + memoryDir + value
+
+    def executeInstruction(self):
         pass
-
-    def generateCalcInstruction(self):
-        pass
-
-    def generateWriteInstruction(self):
-        pass
-
-    def generateReadInstruction(self):
-        pass
-
-    def test(self, message):
-        print(message)
 
 ################################################################################
 

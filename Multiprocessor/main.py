@@ -1,4 +1,9 @@
 from models import *
 
 p1 = Processor(1)
-p1.test("\nHello World\n")
+
+print(p1.generateInstruction())
+print(p1.generateInstruction())
+print(p1.generateInstruction())
+print(p1.generateInstruction())
+print(p1.generateInstruction())
