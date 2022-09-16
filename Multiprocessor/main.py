@@ -1,7 +1,7 @@
 # libraries
-from models import *
 from functions import *
 from threading import *
+from models import *
 
 # create processors
 p1 = Processor(1)

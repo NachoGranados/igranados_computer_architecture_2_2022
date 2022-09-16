@@ -2,49 +2,20 @@
 from constants import *
 from functions import *
 class Processor:
-
+    
     def __init__(self, number):        
         self.number = number
-
-    def generateInstruction(self):
-        
-        processorNumber = "P" + str(self.number) + ": "
-
-        instruction = getInstruction(poissonDistribution())
-
-        # calc instruction
-        if(instruction == OPERATIONS[0]):
-
-            return processorNumber + instruction
-
-        # read instruction
-        elif(instruction == OPERATIONS[1]):
-
-            memoryDir = " " + getMemoryDirection(poissonDistribution())
-
-            return processorNumber + instruction + memoryDir
-
-        # write operation
-        elif(instruction == OPERATIONS[2]):
-
-            memoryDir = " " + getMemoryDirection(poissonDistribution()) + "; "
-
-            value = getValue()
-
-            return processorNumber + instruction + memoryDir + value
-
-    def executeInstruction(self):
-        pass
-
-################################################################################
+        #self.instructions = []
+        #self.controller = controller
+        #self.cache = cache
 
 class Instruction:
     
-    def __init__(self, processorNumber, operation, memDirection, value):        
+    def __init__(self, processorNumber, operation):        
         self.processorNumber = processorNumber
         self.operation = operation
-        self.memDirection = memDirection # in case of write
-        self.value = value # in case of write
+        self.memoryDirection = None
+        self.value = None
 
     def getProcessorNumber(self):
         return self.processorNumber
@@ -58,11 +29,11 @@ class Instruction:
     def setOperation(self, operation):
         self.operation = operation
 
-    def getMemDirection(self):
-        return self.memDirection
+    def getMemoryDirection(self):
+        return self.memoryDirection
 
-    def setMemDirection(self, memDirection):
-        self.memDirection = memDirection
+    def setMemoryDirection(self, memoryDirection):
+        self.memoryDirection = memoryDirection
 
     def getValue(self):
         return self.value
