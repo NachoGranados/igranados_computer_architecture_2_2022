@@ -23,12 +23,6 @@ class Processor:
     def setCurrentInstruction(self, currentInstruction):
         self.currentInstruction = currentInstruction
 
-
-
-
-
-
-
 class Instruction:
     
     def __init__(self, processorNumber, operation):        
