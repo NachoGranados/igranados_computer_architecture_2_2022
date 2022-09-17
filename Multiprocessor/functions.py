@@ -106,7 +106,7 @@ This function generates a new instruction for the received processor
 """
 def generateInstruction(processor):        
         
-	processorNumber = processor.number
+	processorNumber = processor.getNumber()
 
 	operation = getOperation(poissonDistribution())
 

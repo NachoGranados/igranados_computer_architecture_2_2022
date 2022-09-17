@@ -5,9 +5,29 @@ class Processor:
     
     def __init__(self, number):        
         self.number = number
+        self.currentInstruction = None
+
         #self.instructions = []
         #self.controller = controller
         #self.cache = cache
+
+    def getNumber(self):
+        return self.number
+
+    def setNumber(self, number):
+        self.number = number
+
+    def getCurrentInstruction(self):
+        return self.currentInstruction
+
+    def setCurrentInstruction(self, currentInstruction):
+        self.currentInstruction = currentInstruction
+
+
+
+
+
+
 
 class Instruction:
     
