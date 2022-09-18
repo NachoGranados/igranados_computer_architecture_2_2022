@@ -146,7 +146,7 @@ def threadFunction(cpu):
 
 """
 This function assign the respective four block of cache memory to the received CPU
-"""
+
 def assignCacheBlocks(cpu):
 
 	for i in range(0, 4):
@@ -156,8 +156,7 @@ def assignCacheBlocks(cpu):
 		cacheBlock = CacheBlock(i, INITIAL_CACHE_STATE, MEMORY_BLOCKS_DIR[memoryIndex], 0)
 
 		cpu.cache.blocks.append(cacheBlock)
-
-		"""
+		
 		memoryIndex = randint(0, 7)
 
 		cpu.cache.block1 = CacheBlock(1, INITIAL_CACHE_STATE, MEMORY_BLOCKS_DIR[memoryIndex], 0)
@@ -169,7 +168,35 @@ def assignCacheBlocks(cpu):
 		memoryIndex = randint(0, 7)
 
 		cpu.cache.block3 = CacheBlock(3, INITIAL_CACHE_STATE, MEMORY_BLOCKS_DIR[memoryIndex], 0)
-		"""
+"""
+
+"""
+This function assign the cache and controller to the received CPU
+"""
+def assignResources(cpuArray):
+    
+	for cpu in cpuArray:
+
+		# create cache
+		cache = Cache(cpu.getNumber())
+
+		# assign cache blocks to the CPU cache
+		for i in range(0, 4):
+        
+			memoryIndex = randint(0, 7)
+
+			cacheBlock = CacheBlock(i, INITIAL_CACHE_STATE, MEMORY_BLOCKS_DIR[memoryIndex], 0)
+
+			cache.blocks.append(cacheBlock)
+
+		# assign cache to CPU
+		cpu.setCache(cache)
+
+		# create controller
+		controller = Controller(cpu.getNumber())
+
+		# assign controller to CPU
+		cpu.setController(controller)
 
 """
 This function creates the main memory dictionary

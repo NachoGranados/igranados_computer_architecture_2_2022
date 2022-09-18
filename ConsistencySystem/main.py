@@ -9,6 +9,12 @@ cpu1 = CPU(1)
 cpu2 = CPU(2)
 cpu3 = CPU(3)
 
+# create CPUs array
+cpuArray = [cpu0, cpu1, cpu2, cpu3]
+
+assignResources(cpuArray)
+
+"""
 # create caches
 cache0 = Cache(0)
 cache1 = Cache(1)
@@ -38,6 +44,7 @@ cpu0.setController(cache0)
 cpu1.setController(cache1)
 cpu2.setController(cache2)
 cpu3.setController(cache3)
+"""
 
 # create main memory
 mainMemory = MainMemory()
