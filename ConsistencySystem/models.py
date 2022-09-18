@@ -1,17 +1,14 @@
 # libraries
-from ConsistencySystem.constants import *
-from ConsistencySystem.functions import *
+from constants import *
+from functions import *
 
-class Processor:
+class CPU:
     
     def __init__(self, number):        
         self.number = number
         self.cache = None
+        self.controller = None
         self.currentInstruction = None
-
-        #self.instructions = []
-        #self.controller = controller
-        #self.cache = cache
 
     def getNumber(self):
         return self.number
@@ -25,6 +22,12 @@ class Processor:
     def setCache(self, cache):
         self.cache = cache
 
+    def getController(self):
+        return self.controller
+
+    def setController(self, controller):
+        self.controller = controller
+
     def getCurrentInstruction(self):
         return self.currentInstruction
 
@@ -33,17 +36,17 @@ class Processor:
 
 class Instruction:
     
-    def __init__(self, processorNumber, operation):        
-        self.processorNumber = processorNumber
+    def __init__(self, cpuNumber, operation):        
+        self.cpuNumber = cpuNumber
         self.operation = operation
         self.memoryDirection = None
         self.value = None
 
-    def getProcessorNumber(self):
-        return self.processorNumber
+    def getCpuNumber(self):
+        return self.cpuNumber
 
-    def setProcessorNumber(self, processorNumber):
-        self.processorNumber = processorNumber
+    def setCpuNumber(self, cpuNumber):
+        self.cpuNumber = cpuNumber
 
     def getOperation(self):
         return self.operation
@@ -66,33 +69,38 @@ class Instruction:
 class MainMemory:
     
     def __init__(self):        
-        self.dictionary = self.startMemory()
-        
-    def startMemory(self):
-        
-        dictionary = {}
+        self.dictionary = None
 
-        for i in MEMORY_BLOCKS_DIR:
+    def getDictionary(self):
+        return self.dictionary
 
-            dictionary[i] = hex(0)
-
-        return dictionary
+    def setDictionary(self, dictionary):
+        self.dictionary = dictionary
 
 class Cache:
     
-    def __init__(self, processorNumber):
-        self.processorNumber = processorNumber
-        self.block0 = None
-        self.block1 = None
-        self.block2 = None
-        self.block3 = None
+    def __init__(self, cpuNumber):
+        self.cpuNumber = cpuNumber
+        self.blocks = []
 
-    def getProcessorNumber(self):
-        return self.processorNumber
+        #self.block0 = None
+        #self.block1 = None
+        #self.block2 = None
+        #self.block3 = None
 
-    def setProcessorNumber(self, processorNumber):
-        self.processorNumber = processorNumber
+    def getCpuNumber(self):
+        return self.cpuNumber
 
+    def setCpuNumber(self, cpuNumber):
+        self.cpuNumber = cpuNumber
+
+    def getBlocks(self):
+        return self.blocks
+
+    def setBlocks(self, blocks):
+        self.blocks = blocks
+
+    """
     def getBlock0(self):
         return self.block0
 
@@ -116,6 +124,7 @@ class Cache:
 
     def setBlock3(self, block3):
         self.block3 = block3
+    """
 
 class CacheBlock:
     
@@ -151,11 +160,15 @@ class CacheBlock:
 
 class Controller:
     
-    def __init__(self, processorNumber):
-        self.processorNumber = processorNumber
+    def __init__(self):
+        pass
 
-    def getProcessorNumber(self):
-        return self.processorNumber
+        #self.cpuNumber = cpuNumber    
 
-    def setProcessorNumber(self, processorNumber):
-        self.processorNumber = processorNumber
+    """
+    def getCpuNumber(self):
+        return self.cpuNumber
+
+    def setCpuNumber(self, cpuNumber):
+        self.cpuNumber = cpuNumber
+    """

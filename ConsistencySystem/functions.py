@@ -1,8 +1,8 @@
 # libraries
 from math import *
 from random import *
-from ConsistencySystem.constants import *
-from ConsistencySystem.models import *
+from constants import *
+from models import *
 
 """
 This function calculates the poisson distribution based on
@@ -102,15 +102,15 @@ def getValue():
 	return hex(probability)
 
 """
-This function generates a new instruction for the received processor
+This function generates a new instruction for the received CPU
 """
-def generateInstruction(processor):        
+def generateInstruction(cpu):        
         
-	processorNumber = processor.getNumber()
+	cpuNumber = cpu.getNumber()
 
 	operation = getOperation(poissonDistribution())
 
-	instruction = Instruction(processorNumber, operation)
+	instruction = Instruction(cpuNumber, operation)
 
 	# not calc operation
 	if(operation != OPERATIONS[0]):
@@ -129,36 +129,65 @@ def generateInstruction(processor):
 	return instruction
 
 """
-This function indicates to a processor to generate a new instruction
+This function indicates to a CPU to generate a new instruction
 """
-def threadFunction(processor):
+def threadFunction(cpu):
     
-	instruction = generateInstruction(processor)
+	instruction = generateInstruction(cpu)
 	
-	print("ProcessorNumber = ", instruction.getProcessorNumber())
+	print("CPUNumber = ", instruction.getCpuNumber())
 	print("Operation = ", instruction.getOperation())
 	print("MemoryDirection = ", instruction.getMemoryDirection())
 	print("Value = ", instruction.getValue())
     
 	return instruction
 
-def assignCacheBlocks(processor):
+def assignCacheBlocks(cpu):
     
     memoryIndex = randint(0, 7)
 
-    processor.cache.block0 = CacheBlock(0, INITIAL_CACHE_STATE, MEMORY_BLOCKS_DIR[memoryIndex], 0)
+    cpu.cache.block0 = CacheBlock(0, INITIAL_CACHE_STATE, MEMORY_BLOCKS_DIR[memoryIndex], 0)
 
     memoryIndex = randint(0, 7)
 
-    processor.cache.block1 = CacheBlock(1, INITIAL_CACHE_STATE, MEMORY_BLOCKS_DIR[memoryIndex], 0)
+    cpu.cache.block1 = CacheBlock(1, INITIAL_CACHE_STATE, MEMORY_BLOCKS_DIR[memoryIndex], 0)
 
     memoryIndex = randint(0, 7)
 
-    processor.cache.block2 = CacheBlock(2, INITIAL_CACHE_STATE, MEMORY_BLOCKS_DIR[memoryIndex], 0)
+    cpu.cache.block2 = CacheBlock(2, INITIAL_CACHE_STATE, MEMORY_BLOCKS_DIR[memoryIndex], 0)
 
     memoryIndex = randint(0, 7)
 
-    processor.cache.block3 = CacheBlock(3, INITIAL_CACHE_STATE, MEMORY_BLOCKS_DIR[memoryIndex], 0)
+    cpu.cache.block3 = CacheBlock(3, INITIAL_CACHE_STATE, MEMORY_BLOCKS_DIR[memoryIndex], 0)
+
+"""
+This function creates the main memory dictionary
+"""
+def startMemory():
+        
+        dictionary = {}
+
+        for i in MEMORY_BLOCKS_DIR:
+
+            dictionary[i] = hex(0)
+
+        return dictionary
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -175,7 +204,7 @@ def assignCacheBlocks(processor):
 
 """
 """
-def executeInstruction(processor, instruction):
+def executeInstruction(cpu, instruction):
 	pass
 
 
