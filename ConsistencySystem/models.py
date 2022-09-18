@@ -82,7 +82,9 @@ class Cache:
     def __init__(self, cpuNumber):
         self.cpuNumber = cpuNumber
         self.blocks = []
-
+        self.hitAlert = 0
+        self.missAlert = 0
+        
         #self.block0 = None
         #self.block1 = None
         #self.block2 = None
@@ -100,7 +102,19 @@ class Cache:
     def setBlocks(self, blocks):
         self.blocks = blocks
 
-    """
+    def getHitAlert(self):
+        return self.hitAlert
+
+    def setHitAlert(self, hitAlert):
+        self.hitAlert = hitAlert
+
+    def getMissAlert(self):
+        return self.missAlert
+
+    def setMissAlert(self, missAlert):
+        self.missAlert = missAlert
+
+    """    
     def getBlock0(self):
         return self.block0
 
@@ -160,15 +174,11 @@ class CacheBlock:
 
 class Controller:
     
-    def __init__(self):
-        pass
-
-        #self.cpuNumber = cpuNumber    
-
-    """
+    def __init__(self, cpuNumber):
+        self.cpuNumber = cpuNumber    
+    
     def getCpuNumber(self):
         return self.cpuNumber
 
     def setCpuNumber(self, cpuNumber):
         self.cpuNumber = cpuNumber
-    """

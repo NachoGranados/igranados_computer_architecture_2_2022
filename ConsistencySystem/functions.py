@@ -24,15 +24,15 @@ distribution
 def getOperation(probability):
 
 	if(probability >= 0 and probability < CALC_PROBABILITY):
-    	
+
 		return OPERATIONS[0]
 
 	elif(probability >= CALC_PROBABILITY and probability < READ_PROBABILITY):
-    	
+
 		return OPERATIONS[1]
 
 	else:
-    	
+
 		return OPERATIONS[2]
 
 """
@@ -43,48 +43,48 @@ def getMemoryDirection(probability):
 
 	# memory direction 0000
 	if(probability >= 0 and probability < MEMORY_BLOCKS_PROB[0]):
-    	
+
 		return MEMORY_BLOCKS_DIR[0]
 
 	# memory direction 0001
 	elif(probability >= MEMORY_BLOCKS_PROB[0] and
 	     probability < MEMORY_BLOCKS_PROB[1]):
-    	
+
 		return MEMORY_BLOCKS_DIR[1]
 
 	# memory direction 0010
 	elif(probability >= MEMORY_BLOCKS_PROB[1] and
 	     probability < MEMORY_BLOCKS_PROB[2]):
-    	
+
 		return MEMORY_BLOCKS_DIR[2]
 
 	# memory direction 0011
 	elif(probability >= MEMORY_BLOCKS_PROB[2] and
 	     probability < MEMORY_BLOCKS_PROB[3]):
-    	
+
 		return MEMORY_BLOCKS_DIR[3]
 
 	# memory direction 0100
 	elif(probability >= MEMORY_BLOCKS_PROB[3] and
 	     probability < MEMORY_BLOCKS_PROB[4]):
-    	
+
 		return MEMORY_BLOCKS_DIR[4]
 
 	# memory direction 0101
 	elif(probability >= MEMORY_BLOCKS_PROB[4] and
 	     probability < MEMORY_BLOCKS_PROB[5]):
-    	
+
 		return MEMORY_BLOCKS_DIR[5]
 
 	# memory direction 0110
 	elif(probability >= MEMORY_BLOCKS_PROB[5] and
 	     probability < MEMORY_BLOCKS_PROB[6]):
-    	
+
 		return MEMORY_BLOCKS_DIR[6]
 
 	# memory direction 0111
 	else:
-    	
+
 		return MEMORY_BLOCKS_DIR[7]
 
 """
@@ -114,14 +114,14 @@ def generateInstruction(cpu):
 
 	# not calc operation
 	if(operation != OPERATIONS[0]):
-    	
+		
 		memoryDirection = getMemoryDirection(poissonDistribution())
 
 		instruction.setMemoryDirection(memoryDirection)
 
 		# write operation
 		if(operation == OPERATIONS[2]):
-
+		
 			value = getValue()
 
 			instruction.setValue(value)
@@ -129,36 +129,47 @@ def generateInstruction(cpu):
 	return instruction
 
 """
-This function indicates to a CPU to generate a new instruction
+This function indicates to the CPU to generate a new instruction
 """
 def threadFunction(cpu):
     
 	instruction = generateInstruction(cpu)
+
+	cpu.setCurrentInstruction(instruction)
 	
-	print("CPUNumber = ", instruction.getCpuNumber())
-	print("Operation = ", instruction.getOperation())
-	print("MemoryDirection = ", instruction.getMemoryDirection())
-	print("Value = ", instruction.getValue())
+	#print("CPUNumber = ", instruction.getCpuNumber())
+	#print("Operation = ", instruction.getOperation())
+	#print("MemoryDirection = ", instruction.getMemoryDirection())
+	#print("Value = ", instruction.getValue())
     
-	return instruction
+	#return instruction
 
+"""
+This function assign the respective four block of cache memory to the received CPU
+"""
 def assignCacheBlocks(cpu):
+
+	for i in range(0, 4):
     
-    memoryIndex = randint(0, 7)
+		memoryIndex = randint(0, 7)
 
-    cpu.cache.block0 = CacheBlock(0, INITIAL_CACHE_STATE, MEMORY_BLOCKS_DIR[memoryIndex], 0)
+		cacheBlock = CacheBlock(i, INITIAL_CACHE_STATE, MEMORY_BLOCKS_DIR[memoryIndex], 0)
 
-    memoryIndex = randint(0, 7)
+		cpu.cache.blocks.append(cacheBlock)
 
-    cpu.cache.block1 = CacheBlock(1, INITIAL_CACHE_STATE, MEMORY_BLOCKS_DIR[memoryIndex], 0)
+		"""
+		memoryIndex = randint(0, 7)
 
-    memoryIndex = randint(0, 7)
+		cpu.cache.block1 = CacheBlock(1, INITIAL_CACHE_STATE, MEMORY_BLOCKS_DIR[memoryIndex], 0)
 
-    cpu.cache.block2 = CacheBlock(2, INITIAL_CACHE_STATE, MEMORY_BLOCKS_DIR[memoryIndex], 0)
+		memoryIndex = randint(0, 7)
 
-    memoryIndex = randint(0, 7)
+		cpu.cache.block2 = CacheBlock(2, INITIAL_CACHE_STATE, MEMORY_BLOCKS_DIR[memoryIndex], 0)
 
-    cpu.cache.block3 = CacheBlock(3, INITIAL_CACHE_STATE, MEMORY_BLOCKS_DIR[memoryIndex], 0)
+		memoryIndex = randint(0, 7)
+
+		cpu.cache.block3 = CacheBlock(3, INITIAL_CACHE_STATE, MEMORY_BLOCKS_DIR[memoryIndex], 0)
+		"""
 
 """
 This function creates the main memory dictionary
@@ -204,7 +215,7 @@ def startMemory():
 
 """
 """
-def executeInstruction(cpu, instruction):
+def executeInstruction(cpu):
 	pass
 
 
