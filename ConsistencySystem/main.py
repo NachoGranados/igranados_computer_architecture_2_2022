@@ -12,9 +12,6 @@ cpu3 = CPU(3)
 # create CPUs array
 cpuArray = [cpu0, cpu1, cpu2, cpu3]
 
-# assign cache and controller to each CPU
-#assignResources(cpuArray)
-
 # create main memory
 mainMemory = MainMemory()
 
@@ -22,10 +19,10 @@ mainMemory = MainMemory()
 bus = Bus(cpuArray, mainMemory)
 
 # create threads
-thread0 = Thread(target = cpu0.generateInstruction)
-thread1 = Thread(target = cpu1.generateInstruction)
-thread2 = Thread(target = cpu2.generateInstruction)
-thread3 = Thread(target = cpu3.generateInstruction)
+thread0 = Thread(target = cpu0.threadFunction, args=(bus,))
+thread1 = Thread(target = cpu1.threadFunction, args=(bus,))
+thread2 = Thread(target = cpu2.threadFunction, args=(bus,))
+thread3 = Thread(target = cpu3.threadFunction, args=(bus,))
 
 # start threads
 thread0.start()
@@ -50,7 +47,9 @@ for i in cpu0.controller.cache.blocks:
     print("")
 """
 
-
+"""
 for cpu in cpuArray:
     print(cpu.currentInstruction.operation)
+"""
 
+#print(mainMemory.dictionary)

@@ -1,19 +1,18 @@
 Flujo de ejecucion de instrucciones:
 
-Generar la instruccion
+Generar la instruccion 
 Identificar la instruccion
 
 CALC:
     No hace nada
 
-
 READ:
-    Leer direccion de memoria
-    Comparar direccion de memoria con los bloques de cache
+    Leer la direccion de memoria
+    Comparar la direccion de memoria con los bloques de cache
 
     Si hay match
-        Revisar estado        
-            Si es M,E,S
+        Revisar el estado        
+            Si es M, E o S
                 Se lee el dato
                 Se genera un hit
             Si es I
@@ -26,18 +25,19 @@ READ:
     Consultar el bus
         Revisar el lock
         Consultar a las demas caches por la direccion de memoria
-            Primero buscar el estado E
-                Mantener estado E
-                Cambiar a estado **************************************************
-            Segundo buscar estado M
-                Cambiar a estado S
-                Cambiar a estado S
-            Tercero buscar estado S
-                Mantener estado E
+            Si hay match
+                Si es M, E o S
+                    Obtener el dato
+                    Cambiar a estado S
+                    Cambiar a estado S
+                Si es I
+                    No esta el valor
+            No hay match
+                Ir a memoria principal
+                Obtener el dato
                 Cambiar a estado E
-            Cuarto buscar en memoria
-                Traer dato de memoria
-                Cambiar a estado E
+                En cual bloque se debe guardar? ******************************************************
+
 
 
 WRITE:

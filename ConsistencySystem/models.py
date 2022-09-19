@@ -22,13 +22,9 @@ class MainMemory:
     """
     def startMemory(self):        
         
-        #dictionary = {}
-
         for i in MEMORY_BLOCKS_DIR:
 
             self.dictionary[i] = hex(0)
-
-        #return dictionary
 
 class Bus:
     
@@ -55,22 +51,25 @@ class Bus:
     def setLock(self, lock):
         self.lock = lock
 
+    def acquireLock(self):
+        self.lock.acquire()
+
+    def releaseLock(self):
+        self.lock.release()
+
 class Instruction:
     
-    #def __init__(self, cpuNumber, operation):
-    def __init__(self, operation):        
-        #self.cpuNumber = cpuNumber
+    def __init__(self, cpuNumber, operation):
+        self.cpuNumber = cpuNumber
         self.operation = operation
         self.memoryDirection = None
         self.value = None
 
-    """
     def getCpuNumber(self):
         return self.cpuNumber
 
     def setCpuNumber(self, cpuNumber):
         self.cpuNumber = cpuNumber
-    """
 
     def getOperation(self):
         return self.operation
@@ -92,41 +91,14 @@ class Instruction:
 
 class Cache:
     
-    #def __init__(self, cpuNumber):
     def __init__(self):
-        #self.cpuNumber = cpuNumber # unnecessary
         self.blocks = []
-
-        #self.hitAlert = 0
-        #self.missAlert = 0
-    
-    """
-    def getCpuNumber(self):
-        return self.cpuNumber
-
-    def setCpuNumber(self, cpuNumber):
-        self.cpuNumber = cpuNumber
-    """
 
     def getBlocks(self):
         return self.blocks
 
     def setBlocks(self, blocks):
         self.blocks = blocks
-
-    """
-    def getHitAlert(self):
-        return self.hitAlert
-
-    def setHitAlert(self, hitAlert):
-        self.hitAlert = hitAlert
-
-    def getMissAlert(self):
-        return self.missAlert
-
-    def setMissAlert(self, missAlert):
-        self.missAlert = missAlert
-    """
 
 class CacheBlock:
     
@@ -162,21 +134,11 @@ class CacheBlock:
 
 class Controller:
     
-    #def __init__(self, cpuNumber, cache):
     def __init__(self):
-        #self.cpuNumber = cpuNumber # unnecessary
         self.cache = None
         self.hitAlert = 0
         self.missAlert = 0
     
-    """
-    def getCpuNumber(self):
-        return self.cpuNumber
-
-    def setCpuNumber(self, cpuNumber):
-        self.cpuNumber = cpuNumber
-    """
-
     def getCache(self):
         return self.cache
 
@@ -195,11 +157,243 @@ class Controller:
     def setMissAlert(self, missAlert):
         self.missAlert = missAlert
 
-    def localSearch(self):
+    def resetAlerts(self):
+        self.hitAlert = 0
+        self.missAlert = 0
+
+    """
+    This function checks if the cache has the requested block to read it
+    """
+    def localRead(self, instruction):
+
+        memoryDirection = instruction.getMemoryDirection()
+
+        blocks = self.cache.blocks
+
+        for block in blocks:
+
+            # memory direction match
+            if(block.getMemoryDirection() == memoryDirection):
+
+                state = block.getState()
+
+                # state M, E or S
+                if(state == MODIFIED or state == EXCLUSIVE or state == SHARED):
+
+                    self.hitAlert = 1
+
+                    # hit
+                    return 1
+
+                #state I
+                else:
+
+                    self.missAlert = 1
+
+                    # miss
+                    return 0
+
+            # no memory direction match
+            else:
+
+                return 0
+
+    """
+    
+    """
+    def localWrite(self, instruction):
         pass
 
-    def remoteSearch(self):
+    """
+    This functions identifies the current instruction
+    """
+    def localSearch(self, instruction):
+
+        # read operation
+        if(instruction.getOperation() == OPERATIONS[READ_INDEX]):
+
+            result = self.localRead(instruction)
+
+        # write operation
+        elif(instruction.getOperation() == OPERATIONS[WRITE_INDEX]):
+    
+            result = self.localWrite(instruction)
+
+        # calc instruction
+        else:
+
+            result = 1
+
+        return result
+
+
+
+
+
+
+
+
+
+
+
+
+    """
+    This function checks if the other caches have the requested block to read it
+    """
+    def remoteRead(self, instruction, bus):
+        
+        # acquire lock
+        bus.acquireLock()
+
+        memoryDirection = instruction.getMemoryDirection()
+
+        cpuArray = bus.getCpuArray()
+
+        currentCpu = cpuArray[instruction.getCpuNumber()]
+
+        for cpu in cpuArray:
+
+            # not check current CPU cache
+            if(cpu.getNumber() != currentCpu.getNumber()):
+
+                controller = cpu.getController()
+
+                cache = controller.getCache()
+
+                blocks = cache.getBlocks()
+
+                for block in blocks:
+
+                    # memory direction match
+                    if(block.getMemoryDirection() == memoryDirection):
+
+                        state = block.getState()
+
+                        # not state I
+                        if(state != "I"):
+
+                            blockNumber = block.getNumber()
+
+                            currentController = currentCpu.getController()
+
+                            currentCache = currentController.getCache()
+
+                            currentBlocks = currentCache.getBlocks()
+
+                            currentBlock = currentBlocks[blockNumber]
+
+                            value = block.getValue()                            
+
+                            block.setState("S")                                
+
+                            currentBlock.setState("S")
+
+                            currentBlock.setMemoryDirection(memoryDirection)
+
+                            currentBlock.setValue(value)
+
+                    # search in main memory
+                    else:
+
+                        mainMemory = bus.getMainMemory()
+
+                        dictionary = mainMemory.getDictionary()
+
+                        value = dictionary.get(memoryDirection)
+
+                        # change state to E ??????????????????????????????????????????????????????????
+
+                        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        # release lock
+        bus.releaseLock()
+
+
+
+
+
+
+
+
         pass
+
+    """
+    
+    """
+    def remoteWrite(self, instruction):
+        pass
+
+
+    """
+    
+    """
+    def remoteSearch(self, instruction):
+        pass
+
+
+    """
+    
+    """
+    def remoteSearch(self, instruction, bus):
+        
+        # read operation
+        if(instruction.getOperation() == OPERATIONS[READ_INDEX]):
+
+            result = self.remoteRead(instruction, bus)
+
+        # write operation
+        elif(instruction.getOperation() == OPERATIONS[WRITE_INDEX]):
+    
+            result = self.remoteWrite(instruction, bus)
+
+        # calc instruction
+        else:
+
+            result = 1
+
+        return result
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     def invalidateCaches(self):
         pass
@@ -213,21 +407,11 @@ class CPU:
 
         self.assignResources()
 
-        #self.cache = None
-
     def getNumber(self):
         return self.number
 
     def setNumber(self, number):
         self.number = number
-
-    """
-    def getCache(self):
-        return self.cache
-
-    def setCache(self, cache):
-        self.cache = cache
-    """
 
     def getCurrentInstruction(self):
         return self.currentInstruction
@@ -262,15 +446,15 @@ class CPU:
 
         if(probability >= 0 and probability < CALC_PROBABILITY):
 
-            return OPERATIONS[0]
+            return OPERATIONS[CALC_INDEX]
 
         elif(probability >= CALC_PROBABILITY and probability < READ_PROBABILITY):
 
-            return OPERATIONS[1]
+            return OPERATIONS[READ_INDEX]
 
         else:
 
-            return OPERATIONS[2]
+            return OPERATIONS[WRITE_INDEX]
 
     """
     This function returns an specific memory direction based on the
@@ -339,56 +523,14 @@ class CPU:
         return hex(probability)
 
     """
-    This function generates a new instruction for the received CPU
-    """
-    def generateInstruction(self):        
-            
-        #cpuNumber = cpu.getNumber()
-
-        operation = self.getOperation(self.poissonDistribution())
-
-        instruction = Instruction(operation)
-
-        # not calc operation
-        if(operation != OPERATIONS[0]):
-            
-            memoryDirection = self.getMemoryDirection(self.poissonDistribution())
-
-            instruction.setMemoryDirection(memoryDirection)
-
-            # write operation
-            if(operation == OPERATIONS[2]):
-            
-                value = self.getValue()
-
-                instruction.setValue(value)
-
-        #return instruction
-
-        self.currentInstruction = instruction
-
-    """
-    This function indicates to the CPU to generate a new instruction
-    
-    def threadFunction(self, cpu):
-        
-        instruction = generateInstruction(cpu)
-
-        cpu.setCurrentInstruction(instruction)
-    """
-
-    """
     This function assign controller and cache to the CPU
     """
     def assignResources(self):
         
-        #for cpu in cpuArray:
-
         # create controller
         controller = Controller()
 
         # create cache
-        #cache = Cache(cpu.getNumber())
         cache = Cache()
 
         # assign cache blocks to the cache **************************************************************** NO SE SABE SI ES ASI
@@ -403,12 +545,78 @@ class CPU:
         # assign cache to controller
         controller.setCache(cache)
 
-        # create controller
-        #controller = Controller(cpu.getNumber())
-
-        # assign controller to CPU
-        #cpu.setController(controller)
+        # assign controller to CPU        
         self.controller = controller
 
-    def executeInstruction(self):
-        pass
+    """
+    This function generates a new instruction for the received CPU
+    """
+    def generateInstruction(self):        
+        
+        operation = self.getOperation(self.poissonDistribution())
+
+        instruction = Instruction(self.cpuNumber, operation)
+
+        # not calc operation
+        if(operation != OPERATIONS[CALC_INDEX]):
+            
+            memoryDirection = self.getMemoryDirection(self.poissonDistribution())
+
+            instruction.setMemoryDirection(memoryDirection)
+
+            # write operation
+            if(operation == OPERATIONS[WRITE_INDEX]):
+            
+                value = self.getValue()
+
+                instruction.setValue(value)
+        
+        self.currentInstruction = instruction
+
+    """
+    This functions allows the CPU and controller to execute a new instruction 
+    """
+    def executeInstruction(self, bus):
+
+        self.resetAlerts()
+
+        localSearch = self.controller.localSearch(self.currentInstruction)
+
+        # miss
+        if(localSearch == 0):
+
+            remoteRead = self.remoteSearch(self.currentInstruction, bus)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    """
+    This function indicates to the CPU to generate and execute a new instruction
+    """
+    def threadFunction(self, bus):
+        
+        self.generateInstruction()
+
+        self.executeInstruction(bus)
+
+        #pass
