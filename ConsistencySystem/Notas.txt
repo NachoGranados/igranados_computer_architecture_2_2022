@@ -47,11 +47,14 @@ READ
             No hay match
                 Se debe ir a memoria principal
                 Obtener el dato
-                Cambiar a estado local a E
-                En cual bloque se debe guardar? ******************************************************
+
+                Calcular el bloque de cache
+                    Scache = Bmen mod N
+
+                Guardar dato en cache
+                Cambiar a estado local a E               
 
         Liberar el lock
-
 
 WRITE
     Leer direccion de memoria
@@ -71,7 +74,12 @@ WRITE
         Adquirir el lock
         Se debe ir a memoria principal
         Escribir el dato
-        En cual bloque se debe guardar? Write-back? ******************************************************        
+
+        Calcular el bloque de cache
+            Scache = Bmen mod N
+
+        Guardar dato en cache
+        Cambiar a estado local a E
         Invalidar todas las caches
         Liberar el lock
 

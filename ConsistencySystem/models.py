@@ -299,6 +299,12 @@ class Controller:
 
         localCpu = cpuArray[instruction.getCpuNumber()]
 
+        localController = localCpu.getController()
+
+        localCache = localController.getCache()
+
+        localBlocks = localCache.getBlocks()
+
         for cpu in cpuArray:
 
             # ignore local CPU cache
@@ -324,11 +330,11 @@ class Controller:
 
                             remoteBlockNumber = remoteBlock.getNumber()
 
-                            localController = localCpu.getController()
+                            #localController = localCpu.getController()
 
-                            localCache = localController.getCache()
+                            #localCache = localController.getCache()
 
-                            localBlocks = localCache.getBlocks()
+                            #localBlocks = localCache.getBlocks()
 
                             localBlock = localBlocks[remoteBlockNumber]
 
@@ -356,11 +362,21 @@ class Controller:
         
             mainMemory = bus.getMainMemory()
 
-            dictionary = mainMemory.getDictionary()
+            dictionary = mainMemory.getDictionary()           
 
             value = dictionary.get(memoryDirection)
 
-            # change state to E ??????????????????????????????????????????????????????????
+            bmem = int(memoryDirection, 2)
+
+            scache = bmem % SETS
+
+            localBlock = localBlocks[scache]
+
+            localBlock.setMemoryDirection(memoryDirection)
+
+            localBlock.setValue(value)
+
+            localBlock.setState(EXCLUSIVE)
 
         # release lock
         bus.releaseLock()
@@ -383,7 +399,27 @@ class Controller:
 
         dictionary[memoryDirection] = value
 
-        # change state to E? Write-back? ??????????????????????????????????????????????????????????
+        bmem = int(memoryDirection, 2)
+
+        scache = bmem % SETS
+
+        cpuArray = bus.getCpuArray()
+
+        localCpu = cpuArray[instruction.getCpuNumber()]
+
+        localController = localCpu.getController()
+
+        localCache = localController.getCache()
+
+        localBlocks = localCache.getBlocks()
+
+        localBlock = localBlocks[scache]
+
+        localBlock.setMemoryDirection(memoryDirection)
+
+        localBlock.setValue(value)
+
+        localBlock.setState(EXCLUSIVE)
 
         self.invalidateCaches(instruction, bus)
 

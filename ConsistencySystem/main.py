@@ -37,6 +37,15 @@ thread2.join()
 thread3.join()
 
 
+"""
+a = "0b0101"
+b = int(a, 2)
+print(a)
+print(b)
+print(b % 4)
+
+#print(f'{0b101:#0}')
+"""
 
 """
 for i in cpu0.controller.cache.blocks:
@@ -52,4 +61,6 @@ for cpu in cpuArray:
     print(cpu.currentInstruction.operation)
 """
 
-#print(mainMemory.dictionary)
+"""
+print(mainMemory.dictionary)
+"""

@@ -33,3 +33,5 @@ INVALID = "I"
 
 HIT = 1
 MISS = 0
+
+SETS = 4
