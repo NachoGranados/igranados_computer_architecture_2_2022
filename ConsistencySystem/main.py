@@ -1,20 +1,14 @@
 # libraries
 from threading import *
 from models import *
-
-
-from constants import *
-
-
-
+#from constants import *
 
 # create CPUs
 cpu0 = CPU(0)
 cpu1 = CPU(1)
 cpu2 = CPU(2)
-#cpu3 = CPU(3)
+cpu3 = CPU(3)
 
-"""
 # create CPUs array
 cpuArray = [cpu0, cpu1, cpu2, cpu3]
 
@@ -23,14 +17,9 @@ mainMemory = MainMemory()
 
 # create bus
 bus = Bus(cpuArray, mainMemory)
+
 """
-
-
-
-
-
-
-# VALORE QUEMADOS
+# VALORES QUEMADOS
 
 # cpu0
 # block0
@@ -152,28 +141,25 @@ instruction = Instruction(1, OPERATIONS[READ_INDEX])
 instruction.memoryDirection = MEMORY_BLOCKS_DIR[7]
 cpu1.currentInstruction = instruction
 cpu1.executeInstruction(bus)
-
-
-
 """
+
 # create threads
 thread0 = Thread(target = cpu0.threadFunction, args=(bus,))
-#thread1 = Thread(target = cpu1.threadFunction, args=(bus,))
-#thread2 = Thread(target = cpu2.threadFunction, args=(bus,))
-#thread3 = Thread(target = cpu3.threadFunction, args=(bus,))
+thread1 = Thread(target = cpu1.threadFunction, args=(bus,))
+thread2 = Thread(target = cpu2.threadFunction, args=(bus,))
+thread3 = Thread(target = cpu3.threadFunction, args=(bus,))
 
 # start threads
 thread0.start()
-#thread1.start()
-#thread2.start()
-#thread3.start()
+thread1.start()
+thread2.start()
+thread3.start()
 
 # wait until threads are completely executed
 thread0.join()
-#thread1.join()
-#thread2.join()
-#thread3.join()
-"""
+thread1.join()
+thread2.join()
+thread3.join()
 
 """
 a = "0b0101"
@@ -194,6 +180,7 @@ for i in cpu0.controller.cache.blocks:
     print("")
 """
 
+"""
 print("")
 
 print("N 0")
@@ -225,7 +212,7 @@ for cpu in cpuArray:
 
 print(mainMemory.dictionary)
 print("")
-
+"""
 
 """
 print(MEMORY_BLOCKS_DIR)

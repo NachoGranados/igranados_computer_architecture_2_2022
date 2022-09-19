@@ -328,15 +328,7 @@ class Controller:
 
                             located = 1
 
-                            #remoteBlockNumber = remoteBlock.getNumber()
-
-                            #localController = localCpu.getController()
-
-                            #localCache = localController.getCache()
-
-                            #localBlocks = localCache.getBlocks()
-
-                            #localBlock = localBlocks[remoteBlockNumber]
+                            localBlock = localBlocks[0]
 
                             for block in localBlocks:
 
