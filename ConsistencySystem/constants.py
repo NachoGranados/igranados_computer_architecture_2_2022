@@ -1,5 +1,3 @@
-from re import M
-
 PROBABILITY_MIN = 1
 PROBABILITY_MAX = 14
 
@@ -35,3 +33,5 @@ HIT = 1
 MISS = 0
 
 SETS = 4
+
+TIMER = 3

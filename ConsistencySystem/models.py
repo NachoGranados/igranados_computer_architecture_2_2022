@@ -3,6 +3,7 @@ from math import *
 from random import *
 from constants import *
 from threading import *
+from time import *
 
 class MainMemory:
     
@@ -644,7 +645,17 @@ class CPU:
     This function indicates to the CPU to generate and execute a new instruction
     """
     def threadFunction(self, bus):
-        
-        self.generateInstruction()
 
-        self.executeInstruction(bus)
+        for i in range(0, 5):
+        
+            self.generateInstruction()
+
+            print("Generating", self.number)
+
+            sleep(TIMER)
+
+            self.executeInstruction(bus)
+
+            print("Executing", self.number)
+
+            sleep(TIMER)
