@@ -342,6 +342,8 @@ class Controller:
                             # state M
                             if(state == MODIFIED):
 
+                                sleep(TIMER * 2)
+
                                 mainMemory = bus.getMainMemory()
 
                                 dictionary = mainMemory.getDictionary()
@@ -358,6 +360,8 @@ class Controller:
 
         # search in main memory
         if(located == 0):
+
+            sleep(TIMER * 2)
         
             mainMemory = bus.getMainMemory()
 
@@ -391,6 +395,8 @@ class Controller:
         memoryDirection = instruction.getMemoryDirection()
 
         value = instruction.getValue()
+
+        sleep(TIMER * 2)
 
         mainMemory = bus.getMainMemory()
 
