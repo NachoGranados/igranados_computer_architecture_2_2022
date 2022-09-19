@@ -136,39 +136,6 @@ def threadFunction(cpu):
 	instruction = generateInstruction(cpu)
 
 	cpu.setCurrentInstruction(instruction)
-	
-	#print("CPUNumber = ", instruction.getCpuNumber())
-	#print("Operation = ", instruction.getOperation())
-	#print("MemoryDirection = ", instruction.getMemoryDirection())
-	#print("Value = ", instruction.getValue())
-    
-	#return instruction
-
-"""
-This function assign the respective four block of cache memory to the received CPU
-
-def assignCacheBlocks(cpu):
-
-	for i in range(0, 4):
-    
-		memoryIndex = randint(0, 7)
-
-		cacheBlock = CacheBlock(i, INITIAL_CACHE_STATE, MEMORY_BLOCKS_DIR[memoryIndex], 0)
-
-		cpu.cache.blocks.append(cacheBlock)
-		
-		memoryIndex = randint(0, 7)
-
-		cpu.cache.block1 = CacheBlock(1, INITIAL_CACHE_STATE, MEMORY_BLOCKS_DIR[memoryIndex], 0)
-
-		memoryIndex = randint(0, 7)
-
-		cpu.cache.block2 = CacheBlock(2, INITIAL_CACHE_STATE, MEMORY_BLOCKS_DIR[memoryIndex], 0)
-
-		memoryIndex = randint(0, 7)
-
-		cpu.cache.block3 = CacheBlock(3, INITIAL_CACHE_STATE, MEMORY_BLOCKS_DIR[memoryIndex], 0)
-"""
 
 """
 This function assign the cache and controller to the received CPU

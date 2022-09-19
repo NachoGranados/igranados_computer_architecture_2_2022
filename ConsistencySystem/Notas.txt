@@ -1,0 +1,76 @@
+Flujo de ejecucion de instrucciones:
+
+Generar la instruccion
+Identificar la instruccion
+
+CALC:
+    No hace nada
+
+
+READ:
+    Leer direccion de memoria
+    Comparar direccion de memoria con los bloques de cache
+
+    Si hay match
+        Revisar estado        
+            Si es M,E,S
+                Se lee el dato
+                Se genera un hit
+            Si es I
+                Se genera un miss
+                Se debe consultar el bus
+
+    No hay match
+        Se debe consultar el bus
+
+    Consultar el bus
+        Revisar el lock
+        Consultar a las demas caches por la direccion de memoria
+            Primero buscar el estado E
+                Mantener estado E
+                Cambiar a estado **************************************************
+            Segundo buscar estado M
+                Cambiar a estado S
+                Cambiar a estado S
+            Tercero buscar estado S
+                Mantener estado E
+                Cambiar a estado E
+            Cuarto buscar en memoria
+                Traer dato de memoria
+                Cambiar a estado E
+
+
+WRITE:
+    Leer direccion de memoria
+    Comparar direccion de memoria con los bloques de cache
+
+    Si hay match
+        Escribir dato
+        Cambiar a estado M
+        
+        Revisar estado        
+            Si es M,E,S
+                Se lee el dato
+                Se genera un hit
+            Si es I
+                Se genera un miss
+                Se debe consultar el bus
+
+    No hay match
+        Se debe consultar el bus
+
+    Consultar el bus
+        Revisar el lock
+        Consultar a las demas caches por la direccion de memoria
+            Primero buscar el estado E
+                Mantener estado E
+                Cambiar a estado **************************************************
+            Segundo buscar estado M
+                Cambiar a estado S
+                Cambiar a estado S
+            Tercero buscar estado S
+                Mantener estado E
+                Cambiar a estado E
+            Cuarto buscar en memoria
+                Traer dato de memoria
+                Cambiar a estado E
