@@ -3,74 +3,84 @@ Flujo de ejecucion de instrucciones:
 Generar la instruccion 
 Identificar la instruccion
 
-CALC:
+CALC
     No hace nada
 
-READ:
-    Leer la direccion de memoria
+READ
+    Leer la direccion de memoria    
     Comparar la direccion de memoria con los bloques de cache
 
     Si hay match
-        Revisar el estado        
+        Revisar el estado
+
             Si es M, E o S
                 Se lee el dato
                 Se genera un hit
+
             Si es I
                 Se genera un miss
                 Se debe consultar el bus
 
     No hay match
+        Se genera un miss
         Se debe consultar el bus
 
     Consultar el bus
-        Revisar el lock
+        Adquirir el lock
         Consultar a las demas caches por la direccion de memoria
-            Si hay match
+
+            Si hay match            
+
                 Si es M, E o S
                     Obtener el dato
-                    Cambiar a estado S
-                    Cambiar a estado S
+
+                    Si es M
+                        Se debe ir a memoria principal
+                        Escribir el dato
+                        
+                    Cambiar a estado local a S
+                    Cambiar a estado remoto a S
+
                 Si es I
                     No esta el valor
+
             No hay match
-                Ir a memoria principal
+                Se debe ir a memoria principal
                 Obtener el dato
-                Cambiar a estado E
+                Cambiar a estado local a E
                 En cual bloque se debe guardar? ******************************************************
 
+        Liberar el lock
 
 
-WRITE:
+WRITE
     Leer direccion de memoria
     Comparar direccion de memoria con los bloques de cache
 
     Si hay match
-        Escribir dato
-        Cambiar a estado M
-        
-        Revisar estado        
-            Si es M,E,S
-                Se lee el dato
-                Se genera un hit
-            Si es I
-                Se genera un miss
-                Se debe consultar el bus
+        Escribir el dato
+        Cambiar a estado local a M
+        Invalidar todas las caches
+        Se genera un hit        
 
     No hay match
+        Se genera un miss
         Se debe consultar el bus
 
     Consultar el bus
-        Revisar el lock
-        Consultar a las demas caches por la direccion de memoria
-            Primero buscar el estado E
-                Mantener estado E
-                Cambiar a estado **************************************************
-            Segundo buscar estado M
-                Cambiar a estado S
-                Cambiar a estado S
-            Tercero buscar estado S
-                Mantener estado E
-                Cambiar a estado E
-            Cuarto buscar en memoria
-                Traer dato de memoria
-                Cambiar a estado E
+        Adquirir el lock
+        Se debe ir a memoria principal
+        Escribir el dato
+        En cual bloque se debe guardar? Write-back? ******************************************************        
+        Invalidar todas las caches
+        Liberar el lock
+
+    Invalidar todas las caches
+            Leer direccion de memoria
+            Comparar la direccion de memoria con los bloques de cache
+
+            Si hay match
+                Cambiar a estado I
+
+            No hay match
+                No esta el valor

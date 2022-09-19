@@ -162,6 +162,35 @@ class Controller:
         self.missAlert = 0
 
     """
+    This function invalidates all caches due to a write
+    """
+    def invalidateCaches(self, instruction, bus):
+
+        memoryDirection = instruction.getMemoryDirection()
+
+        cpuArray = bus.getCpuArray()
+
+        localCpu = cpuArray[instruction.getCpuNumber()]
+
+        for cpu in cpuArray:
+
+            # ignore local CPU cache
+            if(cpu.getNumber() != localCpu.getNumber()):
+
+                remoteController = cpu.getController()
+
+                remoteCache = remoteController.getCache()
+
+                remoteBlocks = remoteCache.getBlocks()
+
+                for remoteBlock in remoteBlocks:
+
+                    # memory direction match
+                    if(remoteBlock.getMemoryDirection() == memoryDirection):
+
+                        remoteBlock.setState(INVALID)
+
+    """
     This function checks if the cache has the requested block to read it
     """
     def localRead(self, instruction):
@@ -183,7 +212,7 @@ class Controller:
                     self.hitAlert = 1
 
                     # hit
-                    return 1
+                    return HIT
 
                 #state I
                 else:
@@ -191,23 +220,51 @@ class Controller:
                     self.missAlert = 1
 
                     # miss
-                    return 0
+                    return MISS
 
-            # no memory direction match
-            else:
+        # no memory direction match       
+        self.missAlert = 1
 
-                return 0
-
-    """
-    
-    """
-    def localWrite(self, instruction):
-        pass
+        # miss
+        return MISS
 
     """
-    This functions identifies the current instruction
+    This function checks if the cache has the requested block to write it
     """
-    def localSearch(self, instruction):
+    def localWrite(self, instruction, bus):
+
+        memoryDirection = instruction.getMemoryDirection()
+
+        value = instruction.getValue()
+
+        blocks = self.cache.blocks
+
+        for block in blocks:
+
+            # memory direction match
+            if(block.getMemoryDirection() == memoryDirection):
+
+                block.setValue(value)
+
+                block.setState(MODIFIED)
+
+                self.invalidateCaches(instruction, bus)
+
+                self.hitAlert = 1
+
+                # hit
+                return HIT
+
+        # no memory direction match
+        self.missAlert = 1
+
+        # miss
+        return MISS
+
+    """
+    This functions identifies the current instruction to execute it in the local CPU
+    """
+    def localSearch(self, instruction, bus):
 
         # read operation
         if(instruction.getOperation() == OPERATIONS[READ_INDEX]):
@@ -217,25 +274,14 @@ class Controller:
         # write operation
         elif(instruction.getOperation() == OPERATIONS[WRITE_INDEX]):
     
-            result = self.localWrite(instruction)
+            result = self.localWrite(instruction, bus)
 
         # calc instruction
         else:
 
-            result = 1
+            result = HIT
 
         return result
-
-
-
-
-
-
-
-
-
-
-
 
     """
     This function checks if the other caches have the requested block to read it
@@ -245,158 +291,119 @@ class Controller:
         # acquire lock
         bus.acquireLock()
 
+        located = 0
+
         memoryDirection = instruction.getMemoryDirection()
 
         cpuArray = bus.getCpuArray()
 
-        currentCpu = cpuArray[instruction.getCpuNumber()]
+        localCpu = cpuArray[instruction.getCpuNumber()]
 
         for cpu in cpuArray:
 
-            # not check current CPU cache
-            if(cpu.getNumber() != currentCpu.getNumber()):
+            # ignore local CPU cache
+            if(cpu.getNumber() != localCpu.getNumber()):
 
-                controller = cpu.getController()
+                remoteController = cpu.getController()
 
-                cache = controller.getCache()
+                remoteCache = remoteController.getCache()
 
-                blocks = cache.getBlocks()
+                remoteBlocks = remoteCache.getBlocks()
 
-                for block in blocks:
+                for remoteBlock in remoteBlocks:
 
                     # memory direction match
-                    if(block.getMemoryDirection() == memoryDirection):
+                    if(remoteBlock.getMemoryDirection() == memoryDirection):
 
-                        state = block.getState()
+                        state = remoteBlock.getState()
 
                         # not state I
-                        if(state != "I"):
+                        if(state != INVALID):
 
-                            blockNumber = block.getNumber()
+                            located = 1
 
-                            currentController = currentCpu.getController()
+                            remoteBlockNumber = remoteBlock.getNumber()
 
-                            currentCache = currentController.getCache()
+                            localController = localCpu.getController()
 
-                            currentBlocks = currentCache.getBlocks()
+                            localCache = localController.getCache()
 
-                            currentBlock = currentBlocks[blockNumber]
+                            localBlocks = localCache.getBlocks()
 
-                            value = block.getValue()                            
+                            localBlock = localBlocks[remoteBlockNumber]
 
-                            block.setState("S")                                
+                            value = remoteBlock.getValue()
 
-                            currentBlock.setState("S")
+                            # state M
+                            if(state == MODIFIED):
 
-                            currentBlock.setMemoryDirection(memoryDirection)
+                                mainMemory = bus.getMainMemory()
 
-                            currentBlock.setValue(value)
+                                dictionary = mainMemory.getDictionary()
 
-                    # search in main memory
-                    else:
+                                dictionary[memoryDirection] = value
 
-                        mainMemory = bus.getMainMemory()
+                            remoteBlock.setState(SHARED)                         
 
-                        dictionary = mainMemory.getDictionary()
+                            localBlock.setState(SHARED)
 
-                        value = dictionary.get(memoryDirection)
+                            localBlock.setMemoryDirection(memoryDirection)
 
-                        # change state to E ??????????????????????????????????????????????????????????
+                            localBlock.setValue(value)
 
-                        
+        # search in main memory
+        if(located == 0):
+        
+            mainMemory = bus.getMainMemory()
 
+            dictionary = mainMemory.getDictionary()
 
+            value = dictionary.get(memoryDirection)
 
-
-
-
-
-
-
-
-
-
-
-
-
+            # change state to E ??????????????????????????????????????????????????????????
 
         # release lock
         bus.releaseLock()
 
+    """
+    This function writes the requested block in main memory and generate a write-back
+    """
+    def remoteWrite(self, instruction, bus):
+        
+        # acquire lock
+        bus.acquireLock()
 
+        memoryDirection = instruction.getMemoryDirection()
 
+        value = instruction.getValue()
 
+        mainMemory = bus.getMainMemory()
 
+        dictionary = mainMemory.getDictionary()
 
+        dictionary[memoryDirection] = value
 
+        # change state to E? Write-back? ??????????????????????????????????????????????????????????
 
-        pass
+        self.invalidateCaches(instruction, bus)
+
+        # release lock
+        bus.releaseLock()
 
     """
-    
-    """
-    def remoteWrite(self, instruction):
-        pass
-
-
-    """
-    
-    """
-    def remoteSearch(self, instruction):
-        pass
-
-
-    """
-    
+    This functions identifies the current instruction to execute it any remote CPU
     """
     def remoteSearch(self, instruction, bus):
         
         # read operation
         if(instruction.getOperation() == OPERATIONS[READ_INDEX]):
 
-            result = self.remoteRead(instruction, bus)
+            self.remoteRead(instruction, bus)
 
         # write operation
         elif(instruction.getOperation() == OPERATIONS[WRITE_INDEX]):
     
-            result = self.remoteWrite(instruction, bus)
-
-        # calc instruction
-        else:
-
-            result = 1
-
-        return result
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    def invalidateCaches(self):
-        pass
+            self.remoteWrite(instruction, bus)
 
 class CPU:
     
@@ -555,7 +562,7 @@ class CPU:
         
         operation = self.getOperation(self.poissonDistribution())
 
-        instruction = Instruction(self.cpuNumber, operation)
+        instruction = Instruction(self.number, operation)
 
         # not calc operation
         if(operation != OPERATIONS[CALC_INDEX]):
@@ -578,37 +585,14 @@ class CPU:
     """
     def executeInstruction(self, bus):
 
-        self.resetAlerts()
+        self.controller.resetAlerts()
 
-        localSearch = self.controller.localSearch(self.currentInstruction)
+        localSearch = self.controller.localSearch(self.currentInstruction, bus)
 
         # miss
-        if(localSearch == 0):
+        if(localSearch == MISS):
 
-            remoteRead = self.remoteSearch(self.currentInstruction, bus)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            self.controller.remoteSearch(self.currentInstruction, bus)
 
     """
     This function indicates to the CPU to generate and execute a new instruction
@@ -618,5 +602,3 @@ class CPU:
         self.generateInstruction()
 
         self.executeInstruction(bus)
-
-        #pass

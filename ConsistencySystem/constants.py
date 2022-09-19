@@ -30,3 +30,6 @@ MODIFIED = "M"
 EXCLUSIVE = "E"
 SHARED = "S"
 INVALID = "I"
+
+HIT = 1
+MISS = 0
