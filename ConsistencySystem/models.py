@@ -24,7 +24,7 @@ class MainMemory:
         
         for i in MEMORY_BLOCKS_DIR:
 
-            self.dictionary[i] = hex(0)
+            self.dictionary[i] = INITIAL_MAIN_MEMORY_VALUE
 
 class Bus:
     
@@ -303,7 +303,7 @@ class Controller:
 
         localCache = localController.getCache()
 
-        localBlocks = localCache.getBlocks()
+        localBlocks = localCache.getBlocks()        
 
         for cpu in cpuArray:
 
@@ -316,7 +316,7 @@ class Controller:
 
                 remoteBlocks = remoteCache.getBlocks()
 
-                for remoteBlock in remoteBlocks:
+                for remoteBlock in remoteBlocks:    
 
                     # memory direction match
                     if(remoteBlock.getMemoryDirection() == memoryDirection):
@@ -328,7 +328,7 @@ class Controller:
 
                             located = 1
 
-                            remoteBlockNumber = remoteBlock.getNumber()
+                            #remoteBlockNumber = remoteBlock.getNumber()
 
                             #localController = localCpu.getController()
 
@@ -336,7 +336,13 @@ class Controller:
 
                             #localBlocks = localCache.getBlocks()
 
-                            localBlock = localBlocks[remoteBlockNumber]
+                            #localBlock = localBlocks[remoteBlockNumber]
+
+                            for block in localBlocks:
+
+                                if(block.getMemoryDirection() == memoryDirection):
+
+                                    localBlock = block
 
                             value = remoteBlock.getValue()
 
@@ -419,7 +425,7 @@ class Controller:
 
         localBlock.setValue(value)
 
-        localBlock.setState(EXCLUSIVE)
+        localBlock.setState(MODIFIED)
 
         self.invalidateCaches(instruction, bus)
 
@@ -576,12 +582,24 @@ class CPU:
         # create cache
         cache = Cache()
 
-        # assign cache blocks to the cache **************************************************************** NO SE SABE SI ES ASI
+        usedMemoryIndex = []
+
         for i in range(0, 4):
         
             memoryIndex = randint(0, 7)
 
-            cacheBlock = CacheBlock(i, INITIAL_CACHE_STATE, MEMORY_BLOCKS_DIR[memoryIndex], 0)
+            # blocks 1, 2 and 3
+            if(i > 0):
+            
+                # avoid repeated blocks
+                while(memoryIndex in usedMemoryIndex):
+
+                    memoryIndex = randint(0, 7)
+
+            usedMemoryIndex.append(memoryIndex)
+
+            cacheBlock = CacheBlock(i, INITIAL_CACHE_STATE, MEMORY_BLOCKS_DIR[memoryIndex],
+                                    INITIAL_CACHE_VALUE)
 
             cache.blocks.append(cacheBlock)
 

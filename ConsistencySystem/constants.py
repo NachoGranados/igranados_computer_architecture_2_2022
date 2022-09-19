@@ -1,6 +1,4 @@
 from re import M
-from tkinter import E
-
 
 PROBABILITY_MIN = 1
 PROBABILITY_MAX = 14
@@ -17,14 +15,16 @@ READ_INDEX = 1
 WRITE_INDEX = 2
 
 
-MEMORY_BLOCKS_DIR = ["0b0000", "0b0001", "0b0010", "0b0011",
-                     "0b0100", "0b0101", "0b0110", "0b0111"]
+MEMORY_BLOCKS_DIR = [bin(0), bin(1), bin(2), bin(3),
+                     bin(4), bin(5), bin(6), bin(7)]
 
 MEMORY_BLOCKS_PROB = [5/2,  5,  15/2, 10,
                       25/2, 15, 35/2]
 
 INITIAL_CACHE_STATE = "I"
-INITIAL_CACHE_VALUE = 0
+INITIAL_CACHE_VALUE = hex(0)
+
+INITIAL_MAIN_MEMORY_VALUE = hex(0)
 
 MODIFIED = "M"
 EXCLUSIVE = "E"
