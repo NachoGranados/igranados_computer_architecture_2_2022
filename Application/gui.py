@@ -103,8 +103,8 @@ class Window(tkinter.Tk):
         for block in blocks0:
             number = "B" + str(block.getNumber())
             state = block.getState()
-            memoryDirection = block.getMemoryDirection()
-            value = block.getValue()
+            memoryDirection = "0b" + "{0:04b}".format(block.getMemoryDirection())
+            value = "0x" + "{0:016b}".format(block.getValue())
 
             item = (number, state, memoryDirection, value)
 
@@ -148,8 +148,8 @@ class Window(tkinter.Tk):
         for block in blocks1:
             number = "B" + str(block.getNumber())
             state = block.getState()
-            memoryDirection = block.getMemoryDirection()
-            value = block.getValue()
+            memoryDirection = "0b" + "{0:04b}".format(block.getMemoryDirection())
+            value = "0x" + "{0:016b}".format(block.getValue())
 
             item = (number, state, memoryDirection, value)
 
@@ -186,8 +186,8 @@ class Window(tkinter.Tk):
         for block in blocks2:
             number = "B" + str(block.getNumber())
             state = block.getState()
-            memoryDirection = block.getMemoryDirection()
-            value = block.getValue()
+            memoryDirection = "0b" + "{0:04b}".format(block.getMemoryDirection())
+            value = "0x" + "{0:016b}".format(block.getValue())
 
             item = (number, state, memoryDirection, value)
 
@@ -224,8 +224,8 @@ class Window(tkinter.Tk):
         for block in blocks3:
             number = "B" + str(block.getNumber())
             state = block.getState()
-            memoryDirection = block.getMemoryDirection()
-            value = block.getValue()
+            memoryDirection = "0b" + "{0:04b}".format(block.getMemoryDirection())
+            value = "0x" + "{0:016b}".format(block.getValue())
 
             item = (number, state, memoryDirection, value)
 
@@ -287,6 +287,11 @@ class Window(tkinter.Tk):
         for key in keys:
             keyArray.append(key)
 
+
+        memoryDirection = "0b" + "{0:04b}".format(block.getMemoryDirection())
+        value = "0x" + "{0:016b}".format(block.getValue())
+
+
         # treeview main memory
         mainMemoryFrame.mainMemoryTreeview = ttk.Treeview(mainMemoryFrame, columns = mainMemoryColumns, show = "headings", height = 8, selectmode = "none")
 
@@ -298,14 +303,14 @@ class Window(tkinter.Tk):
         mainMemoryFrame.mainMemoryTreeview.heading("Direction", text = "Direction", anchor = CENTER)
         mainMemoryFrame.mainMemoryTreeview.heading("Value", text = "Value", anchor = CENTER)
 
-        mainMemoryFrame.mainMemoryTreeview.insert(parent = "", index = "end", iid = 0, text = "", values = (keyArray[0], dictionary[keyArray[0]]))
-        mainMemoryFrame.mainMemoryTreeview.insert(parent = "", index = "end", iid = 1, text = "", values = (keyArray[1], dictionary[keyArray[1]]))
-        mainMemoryFrame.mainMemoryTreeview.insert(parent = "", index = "end", iid = 2, text = "", values = (keyArray[2], dictionary[keyArray[2]]))
-        mainMemoryFrame.mainMemoryTreeview.insert(parent = "", index = "end", iid = 3, text = "", values = (keyArray[3], dictionary[keyArray[3]]))
-        mainMemoryFrame.mainMemoryTreeview.insert(parent = "", index = "end", iid = 4, text = "", values = (keyArray[4], dictionary[keyArray[4]]))
-        mainMemoryFrame.mainMemoryTreeview.insert(parent = "", index = "end", iid = 5, text = "", values = (keyArray[5], dictionary[keyArray[5]]))
-        mainMemoryFrame.mainMemoryTreeview.insert(parent = "", index = "end", iid = 6, text = "", values = (keyArray[6], dictionary[keyArray[6]]))
-        mainMemoryFrame.mainMemoryTreeview.insert(parent = "", index = "end", iid = 7, text = "", values = (keyArray[7], dictionary[keyArray[7]]))
+        mainMemoryFrame.mainMemoryTreeview.insert(parent = "", index = "end", iid = 0, text = "", values = ("0b" + "{0:04b}".format(keyArray[0]), "0x" + "{0:016b}".format(dictionary[keyArray[0]])))
+        mainMemoryFrame.mainMemoryTreeview.insert(parent = "", index = "end", iid = 1, text = "", values = ("0b" + "{0:04b}".format(keyArray[1]), "0x" + "{0:016b}".format(dictionary[keyArray[1]])))
+        mainMemoryFrame.mainMemoryTreeview.insert(parent = "", index = "end", iid = 2, text = "", values = ("0b" + "{0:04b}".format(keyArray[2]), "0x" + "{0:016b}".format(dictionary[keyArray[2]])))
+        mainMemoryFrame.mainMemoryTreeview.insert(parent = "", index = "end", iid = 3, text = "", values = ("0b" + "{0:04b}".format(keyArray[3]), "0x" + "{0:016b}".format(dictionary[keyArray[3]])))
+        mainMemoryFrame.mainMemoryTreeview.insert(parent = "", index = "end", iid = 4, text = "", values = ("0b" + "{0:04b}".format(keyArray[4]), "0x" + "{0:016b}".format(dictionary[keyArray[4]])))
+        mainMemoryFrame.mainMemoryTreeview.insert(parent = "", index = "end", iid = 5, text = "", values = ("0b" + "{0:04b}".format(keyArray[5]), "0x" + "{0:016b}".format(dictionary[keyArray[5]])))
+        mainMemoryFrame.mainMemoryTreeview.insert(parent = "", index = "end", iid = 6, text = "", values = ("0b" + "{0:04b}".format(keyArray[6]), "0x" + "{0:016b}".format(dictionary[keyArray[6]])))
+        mainMemoryFrame.mainMemoryTreeview.insert(parent = "", index = "end", iid = 7, text = "", values = ("0b" + "{0:04b}".format(keyArray[7]), "0x" + "{0:016b}".format(dictionary[keyArray[7]])))
 
         mainMemoryFrame.mainMemoryTreeview.pack(side = BOTTOM)
 
@@ -339,7 +344,7 @@ class Window(tkinter.Tk):
 
         # button frame
         buttonFrame = Frame(root)
-        buttonFrame.place(anchor = "center", relx = 0.7985, rely = 0.687)
+        buttonFrame.place(anchor = "center", relx = 0.7985, rely = 0.6)
 
         # step by step button
         buttonFrame.stepByStepButton = Button(buttonFrame, text = "Step by Step", activebackground = "#FF8000", fg = "white", bg = "#4285f4", font = ("Italic", 13), width = 10, heigh = 1, command = root.stepByStep)
@@ -355,7 +360,7 @@ class Window(tkinter.Tk):
 
         # insert instruction tittle frame
         insertInstructionTittleFrame = Frame(root)
-        insertInstructionTittleFrame.place(anchor = "center", relx = 0.795, rely = 0.8)
+        insertInstructionTittleFrame.place(anchor = "center", relx = 0.795, rely = 0.7)
 
         # CPU label
         insertInstructionTittleFrame.cpuLabel = Label(insertInstructionTittleFrame, text = "CPU\n(number)", fg =  "#4285f4", font = ("Italic", 14))
@@ -375,7 +380,7 @@ class Window(tkinter.Tk):
 
         # insert instruction frame
         insertInstructionFrame = Frame(root)
-        insertInstructionFrame.place(anchor = "center", relx = 0.79999, rely = 0.865)
+        insertInstructionFrame.place(anchor = "center", relx = 0.79999, rely = 0.77)
 
         # CPU textBox
         insertInstructionFrame.CpuTextBox = Entry(insertInstructionFrame, width = 10, font = ("Italic", 13))
@@ -393,11 +398,13 @@ class Window(tkinter.Tk):
         insertInstructionFrame.valueTextBox = Entry(insertInstructionFrame, width = 10, font = ("Italic", 13))
         insertInstructionFrame.valueTextBox.pack(padx = 10, pady = 0, side = LEFT)
 
+        # load frame
+        loadFrame = Frame(root)
+        loadFrame.place(anchor = "center", relx = 0.7985, rely = 0.86)
 
-
-
-
-
+        # load button
+        loadFrame.loadButton = Button(loadFrame, text = "Load", activebackground = "#FF8000", fg = "white", bg = "#4285f4", font = ("Italic", 13), width = 20, heigh = 1, command = root.continuosExecution)
+        loadFrame.loadButton.pack(padx = 0, pady = 0, side = LEFT)
 
 
 

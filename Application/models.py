@@ -210,8 +210,6 @@ class Controller:
                 # state M, E or S
                 if(state == MODIFIED or state == EXCLUSIVE or state == SHARED):
 
-                    #self.hitAlert = 1
-
                     # hit
                     return HIT
 
@@ -245,13 +243,11 @@ class Controller:
             # memory direction match
             if(block.getMemoryDirection() == memoryDirection):
 
-                block.setValue("0x" + "{0:016x}".format(value))
+                block.setValue(value)
 
                 block.setState(MODIFIED)
 
                 self.invalidateCaches(instruction, bus)
-
-                #self.hitAlert = 1
 
                 # hit
                 return HIT
@@ -348,7 +344,7 @@ class Controller:
 
                                 dictionary = mainMemory.getDictionary()
 
-                                dictionary[memoryDirection] = "0x" + "{0:016x}".format(value)
+                                dictionary[memoryDirection] = value
 
                             remoteBlock.setState(SHARED)                         
 
@@ -402,11 +398,11 @@ class Controller:
 
         dictionary = mainMemory.getDictionary()
 
-        dictionary[memoryDirection] = "0x" + "{0:016x}".format(value)
+        dictionary[memoryDirection] = value
 
-        bmem = int(memoryDirection, 2)
+        #bmem = int(memoryDirection, 2)
 
-        scache = bmem % SETS
+        scache = memoryDirection % SETS
 
         cpuArray = bus.getCpuArray()
 
@@ -557,7 +553,7 @@ class CPU:
             return MEMORY_BLOCKS_DIR[7]
 
     """
-    This function generates a hex number of 4 bits based on poisson
+    This function generates a number of 4 bits based on poisson
     distribution
     """
     def getValue(self):
@@ -568,7 +564,7 @@ class CPU:
         
             probability = trunc(self.poissonDistribution() * 10000)
 
-        return hex(probability)
+        return probability
 
     """
     This function assign controller and cache to the CPU
