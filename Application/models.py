@@ -245,7 +245,7 @@ class Controller:
             # memory direction match
             if(block.getMemoryDirection() == memoryDirection):
 
-                block.setValue(value)
+                block.setValue("0x" + "{0:016x}".format(value))
 
                 block.setState(MODIFIED)
 
@@ -348,7 +348,7 @@ class Controller:
 
                                 dictionary = mainMemory.getDictionary()
 
-                                dictionary[memoryDirection] = value
+                                dictionary[memoryDirection] = "0x" + "{0:016x}".format(value)
 
                             remoteBlock.setState(SHARED)                         
 
@@ -402,7 +402,7 @@ class Controller:
 
         dictionary = mainMemory.getDictionary()
 
-        dictionary[memoryDirection] = value
+        dictionary[memoryDirection] = "0x" + "{0:016x}".format(value)
 
         bmem = int(memoryDirection, 2)
 

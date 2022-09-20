@@ -20,9 +20,9 @@ MEMORY_BLOCKS_PROB = [5/2,  5,  15/2, 10,
                       25/2, 15, 35/2]
 
 INITIAL_CACHE_STATE = "I"
-INITIAL_CACHE_VALUE = hex(0)
+INITIAL_CACHE_VALUE = "0x" + "{0:016x}".format(0)
 
-INITIAL_MAIN_MEMORY_VALUE = hex(0)
+INITIAL_MAIN_MEMORY_VALUE = "0x" + "{0:016x}".format(0)
 
 MODIFIED = "M"
 EXCLUSIVE = "E"
