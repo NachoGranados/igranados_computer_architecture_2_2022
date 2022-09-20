@@ -1,8 +1,16 @@
 from tkinter import *
-#from tkinter import messagebox
 from  tkinter import ttk
 import tkinter
-import math
+
+
+
+
+
+
+
+
+
+
 
 # main window
 class Window(tkinter.Tk):
@@ -17,22 +25,29 @@ class Window(tkinter.Tk):
         # size
         root.geometry("1150x600")
 
+        # disable resizing
+        root.resizable(False,False)
+
         # title
         root.title = Label(root, text = "Modelo de Protocolo para Coherencia de Caché en Sistemas Multiprocesador", fg = '#4285f4', font = ("Italic", 25))
         root.title.place(x = 20, y = 27)
 
+        # Create an instance of Style widget
+        style = ttk.Style()
+        style.theme_use("clam")
+
         # cpu tittle frame
         cpuTittleFrame = Frame(root)
-        cpuTittleFrame.place(anchor='center', relx=0.5, rely=0.189)
+        cpuTittleFrame.place(anchor = "center", relx = 0.5, rely = 0.189)
 
         # cpu tittle column
         cpuTittleColumn = ("Tittle")
 
         # treeview cpu0 title
-        cpuTittleFrame.cpu0Title = ttk.Treeview(cpuTittleFrame, columns = cpuTittleColumn, show = "headings", height = 0)
+        cpuTittleFrame.cpu0Title = ttk.Treeview(cpuTittleFrame, columns = cpuTittleColumn, show = "headings", height = 0, selectmode = "none")
 
-        cpuTittleFrame.cpu0Title.column("#0", width = 0,  stretch = NO)
-        cpuTittleFrame.cpu0Title.column("Tittle", anchor = CENTER, width = 260)
+        cpuTittleFrame.cpu0Title.column("#0", width = 0, stretch = NO)
+        cpuTittleFrame.cpu0Title.column("Tittle", anchor = CENTER, width = 260, stretch = NO)
 
         cpuTittleFrame.cpu0Title.heading("#0", text = "", anchor = CENTER)
         cpuTittleFrame.cpu0Title.heading("Tittle", text = "N0", anchor = W)
@@ -40,10 +55,10 @@ class Window(tkinter.Tk):
         cpuTittleFrame.cpu0Title.pack(padx = 10, pady = 0, side = LEFT)
 
         # treeview cpu1 title
-        cpuTittleFrame.cpu1Title = ttk.Treeview(cpuTittleFrame, columns = cpuTittleColumn, show = "headings", height = 0)
+        cpuTittleFrame.cpu1Title = ttk.Treeview(cpuTittleFrame, columns = cpuTittleColumn, show = "headings", height = 0, selectmode = "none")
 
-        cpuTittleFrame.cpu1Title.column("#0", width = 0,  stretch = NO)
-        cpuTittleFrame.cpu1Title.column("Tittle", anchor = CENTER, width = 260)
+        cpuTittleFrame.cpu1Title.column("#0", width = 0, stretch = NO)
+        cpuTittleFrame.cpu1Title.column("Tittle", anchor = CENTER, width = 260, stretch = NO)
 
         cpuTittleFrame.cpu1Title.heading("#0", text = "", anchor = CENTER)
         cpuTittleFrame.cpu1Title.heading("Tittle", text = "N1", anchor = W)
@@ -51,10 +66,10 @@ class Window(tkinter.Tk):
         cpuTittleFrame.cpu1Title.pack(padx = 10, pady = 0, side = LEFT)
 
         # treeview cpu2 title
-        cpuTittleFrame.cpu2Title = ttk.Treeview(cpuTittleFrame, columns = cpuTittleColumn, show = "headings", height = 0)
+        cpuTittleFrame.cpu2Title = ttk.Treeview(cpuTittleFrame, columns = cpuTittleColumn, show = "headings", height = 0, selectmode = "none")
 
-        cpuTittleFrame.cpu2Title.column("#0", width = 0,  stretch = NO)
-        cpuTittleFrame.cpu2Title.column("Tittle", anchor = CENTER, width = 260)
+        cpuTittleFrame.cpu2Title.column("#0", width = 0, stretch = NO)
+        cpuTittleFrame.cpu2Title.column("Tittle", anchor = CENTER, width = 260, stretch = NO)
 
         cpuTittleFrame.cpu2Title.heading("#0", text = "", anchor = CENTER)
         cpuTittleFrame.cpu2Title.heading("Tittle", text = "N2", anchor = W)
@@ -62,10 +77,10 @@ class Window(tkinter.Tk):
         cpuTittleFrame.cpu2Title.pack(padx = 10, pady = 0, side = LEFT)
 
         # treeview cpu3 title
-        cpuTittleFrame.cpu3Title = ttk.Treeview(cpuTittleFrame, columns = cpuTittleColumn, show = "headings", height = 0)
+        cpuTittleFrame.cpu3Title = ttk.Treeview(cpuTittleFrame, columns = cpuTittleColumn, show = "headings", height = 0, selectmode = "none")
 
-        cpuTittleFrame.cpu3Title.column("#0", width = 0,  stretch = NO)
-        cpuTittleFrame.cpu3Title.column("Tittle", anchor = CENTER, width = 260)
+        cpuTittleFrame.cpu3Title.column("#0", width = 0, stretch = NO)
+        cpuTittleFrame.cpu3Title.column("Tittle", anchor = CENTER, width = 260, stretch = NO)
 
         cpuTittleFrame.cpu3Title.heading("#0", text = "", anchor = CENTER)
         cpuTittleFrame.cpu3Title.heading("Tittle", text = "N3", anchor = W)
@@ -80,13 +95,13 @@ class Window(tkinter.Tk):
         cpuColumns = ("Block", "State", "Direction", "Value")
 
         # treeview cpu0
-        cpuFrame.cpu0Treeview = ttk.Treeview(cpuFrame, columns = cpuColumns, show = "headings", height = 4)
+        cpuFrame.cpu0Treeview = ttk.Treeview(cpuFrame, columns = cpuColumns, show = "headings", height = 4, selectmode = "none")
 
-        cpuFrame.cpu0Treeview.column("#0", width = 0,  stretch = NO)
-        cpuFrame.cpu0Treeview.column("Block", anchor = CENTER, width = 50)
-        cpuFrame.cpu0Treeview.column("State", anchor = CENTER, width = 50)
-        cpuFrame.cpu0Treeview.column("Direction", anchor = CENTER, width = 80)
-        cpuFrame.cpu0Treeview.column("Value", anchor = CENTER, width = 80)
+        cpuFrame.cpu0Treeview.column("#0", width = 0, stretch = NO)
+        cpuFrame.cpu0Treeview.column("Block", anchor = CENTER, width = 50, stretch = NO)
+        cpuFrame.cpu0Treeview.column("State", anchor = CENTER, width = 50, stretch = NO)
+        cpuFrame.cpu0Treeview.column("Direction", anchor = CENTER, width = 80, stretch = NO)
+        cpuFrame.cpu0Treeview.column("Value", anchor = CENTER, width = 80, stretch = NO)
 
         cpuFrame.cpu0Treeview.heading("#0", text = "", anchor = CENTER)
         cpuFrame.cpu0Treeview.heading("Block", text = "Block", anchor = CENTER)
@@ -102,13 +117,13 @@ class Window(tkinter.Tk):
         cpuFrame.cpu0Treeview.pack(padx = 10, pady = 0, side = LEFT)
 
         # treeview cpu1
-        cpuFrame.cpu1Treeview = ttk.Treeview(cpuFrame, columns = cpuColumns, show = "headings", height = 4)
+        cpuFrame.cpu1Treeview = ttk.Treeview(cpuFrame, columns = cpuColumns, show = "headings", height = 4, selectmode = "none")
 
-        cpuFrame.cpu1Treeview.column("#0", width = 0,  stretch = NO)
-        cpuFrame.cpu1Treeview.column("Block", anchor = CENTER, width = 50)
-        cpuFrame.cpu1Treeview.column("State", anchor = CENTER, width = 50)
-        cpuFrame.cpu1Treeview.column("Direction", anchor = CENTER, width = 80)
-        cpuFrame.cpu1Treeview.column("Value", anchor = CENTER, width = 80)
+        cpuFrame.cpu1Treeview.column("#0", width = 0, stretch = NO)
+        cpuFrame.cpu1Treeview.column("Block", anchor = CENTER, width = 50, stretch = NO)
+        cpuFrame.cpu1Treeview.column("State", anchor = CENTER, width = 50, stretch = NO)
+        cpuFrame.cpu1Treeview.column("Direction", anchor = CENTER, width = 80, stretch = NO)
+        cpuFrame.cpu1Treeview.column("Value", anchor = CENTER, width = 80, stretch = NO)
 
         cpuFrame.cpu1Treeview.heading("#0", text = "", anchor = CENTER)
         cpuFrame.cpu1Treeview.heading("Block", text = "Block", anchor = CENTER)
@@ -124,13 +139,13 @@ class Window(tkinter.Tk):
         cpuFrame.cpu1Treeview.pack(padx = 10, pady = 0, side = LEFT)
 
         # treeview cpu2
-        cpuFrame.cpu2Treeview = ttk.Treeview(cpuFrame, columns = cpuColumns, show = "headings", height = 4)
+        cpuFrame.cpu2Treeview = ttk.Treeview(cpuFrame, columns = cpuColumns, show = "headings", height = 4, selectmode = "none")
 
-        cpuFrame.cpu2Treeview.column("#0", width = 0,  stretch = NO)
-        cpuFrame.cpu2Treeview.column("Block", anchor = CENTER, width = 50)
-        cpuFrame.cpu2Treeview.column("State", anchor = CENTER, width = 50)
-        cpuFrame.cpu2Treeview.column("Direction", anchor = CENTER, width = 80)
-        cpuFrame.cpu2Treeview.column("Value", anchor = CENTER, width = 80)
+        cpuFrame.cpu2Treeview.column("#0", width = 0, stretch = NO)
+        cpuFrame.cpu2Treeview.column("Block", anchor = CENTER, width = 50, stretch = NO)
+        cpuFrame.cpu2Treeview.column("State", anchor = CENTER, width = 50, stretch = NO)
+        cpuFrame.cpu2Treeview.column("Direction", anchor = CENTER, width = 80, stretch = NO)
+        cpuFrame.cpu2Treeview.column("Value", anchor = CENTER, width = 80, stretch = NO)
 
         cpuFrame.cpu2Treeview.heading("#0", text = "", anchor = CENTER)
         cpuFrame.cpu2Treeview.heading("Block", text = "Block", anchor = CENTER)
@@ -146,13 +161,13 @@ class Window(tkinter.Tk):
         cpuFrame.cpu2Treeview.pack(padx = 10, pady = 0, side = LEFT)
 
         # treeview cpu3
-        cpuFrame.cpu3Treeview = ttk.Treeview(cpuFrame, columns = cpuColumns, show = "headings", height = 4)
+        cpuFrame.cpu3Treeview = ttk.Treeview(cpuFrame, columns = cpuColumns, show = "headings", height = 4, selectmode = "none")
 
-        #cpuFrame.cpu3Treeview.column("#0", width = 0,  stretch = NO)
-        cpuFrame.cpu3Treeview.column("Block", anchor = CENTER, width = 50)
-        cpuFrame.cpu3Treeview.column("State", anchor = CENTER, width = 50)
-        cpuFrame.cpu3Treeview.column("Direction", anchor = CENTER, width = 80)
-        cpuFrame.cpu3Treeview.column("Value", anchor = CENTER, width = 80)
+        cpuFrame.cpu3Treeview.column("#0", width = 0, stretch = NO)
+        cpuFrame.cpu3Treeview.column("Block", anchor = CENTER, width = 50, stretch = NO)
+        cpuFrame.cpu3Treeview.column("State", anchor = CENTER, width = 50, stretch = NO)
+        cpuFrame.cpu3Treeview.column("Direction", anchor = CENTER, width = 80, stretch = NO)
+        cpuFrame.cpu3Treeview.column("Value", anchor = CENTER, width = 80, stretch = NO)
 
         cpuFrame.cpu3Treeview.heading("#0", text = "", anchor = CENTER)
         cpuFrame.cpu3Treeview.heading("Block", text = "Block", anchor = CENTER)
@@ -169,35 +184,35 @@ class Window(tkinter.Tk):
 
         # bus frame
         busFrame = Frame(root)
-        busFrame.place(anchor='center', relx=0.5, rely=0.48)
+        busFrame.place(anchor = "center", relx = 0.5, rely = 0.48)
 
         busColumns = ("Bus")
 
         # treeview main memory
-        busFrame.mainMemoryTreeview = ttk.Treeview(busFrame, columns = busColumns, show = "headings", height = 2)
+        busFrame.busTreeview = ttk.Treeview(busFrame, columns = busColumns, show = "headings", height = 2, selectmode = "none")
 
-        busFrame.mainMemoryTreeview.column("#0", width = 0,  stretch = NO)
-        busFrame.mainMemoryTreeview.column("Bus", anchor = CENTER, width = 1106)
+        busFrame.busTreeview.column("#0", width = 0, stretch = NO)
+        busFrame.busTreeview.column("Bus", anchor = CENTER, width = 1112, stretch = NO)
 
-        busFrame.mainMemoryTreeview.heading("#0", text = "", anchor = CENTER)
-        busFrame.mainMemoryTreeview.heading("Bus", text = "", anchor = CENTER)
+        busFrame.busTreeview.heading("#0", text = "", anchor = CENTER)
+        busFrame.busTreeview.heading("Bus", text = "", anchor = CENTER)
 
-        busFrame.mainMemoryTreeview.insert(parent = "", index = "end", iid = 0, text = "", values = ("Bus"))
+        busFrame.busTreeview.insert(parent = "", index = "end", iid = 0, text = "", values = ("Bus"))
 
-        busFrame.mainMemoryTreeview.pack(padx = 0, pady = 0, side = BOTTOM)
+        busFrame.busTreeview.pack(padx = 0, pady = 0, side = BOTTOM)
 
         # main memory frame
         mainMemoryFrame = Frame(root)
-        mainMemoryFrame.place(anchor='center', relx=0.5, rely=0.73)
+        mainMemoryFrame.place(anchor = "center", relx = 0.5, rely = 0.73)
 
         mainMemoryColumns = ("Direction", "Value")
 
         # treeview main memory
-        mainMemoryFrame.mainMemoryTreeview = ttk.Treeview(mainMemoryFrame, columns = mainMemoryColumns, show = "headings", height = 8)
+        mainMemoryFrame.mainMemoryTreeview = ttk.Treeview(mainMemoryFrame, columns = mainMemoryColumns, show = "headings", height = 8, selectmode = "none")
 
-        mainMemoryFrame.mainMemoryTreeview.column("#0", width = 0,  stretch = NO)
-        mainMemoryFrame.mainMemoryTreeview.column("Direction", anchor = CENTER, width = 80)
-        mainMemoryFrame.mainMemoryTreeview.column("Value", anchor = CENTER, width = 80)
+        mainMemoryFrame.mainMemoryTreeview.column("#0", width = 0, stretch = NO)
+        mainMemoryFrame.mainMemoryTreeview.column("Direction", anchor = CENTER, width = 80, stretch = NO)
+        mainMemoryFrame.mainMemoryTreeview.column("Value", anchor = CENTER, width = 80, stretch = NO)
 
         mainMemoryFrame.mainMemoryTreeview.heading("#0", text = "", anchor = CENTER)
         mainMemoryFrame.mainMemoryTreeview.heading("Direction", text = "Direction", anchor = CENTER)
@@ -214,11 +229,89 @@ class Window(tkinter.Tk):
 
         mainMemoryFrame.mainMemoryTreeview.pack(side = BOTTOM)
 
+        # instruction frame
+        instructionFrame = Frame(root)
+        instructionFrame.place(anchor = "center", relx = 0.168, rely = 0.75)
 
+        instructionColumns = ("CPU", "Instruction", "Read Miss", "Write Miss")
 
+        # treeview main memory
+        instructionFrame.instructionTreeview = ttk.Treeview(instructionFrame, columns = instructionColumns, show = "headings", height = 4, selectmode = "none")
 
+        instructionFrame.instructionTreeview.column("#0", width = 0, stretch = NO)
+        instructionFrame.instructionTreeview.column("CPU", anchor = CENTER, width = 40, stretch = NO)
+        instructionFrame.instructionTreeview.column("Instruction", anchor = CENTER, width = 150, stretch = NO)
+        instructionFrame.instructionTreeview.column("Read Miss", anchor = CENTER, width = 80, stretch = NO)
+        instructionFrame.instructionTreeview.column("Write Miss", anchor = CENTER, width = 80, stretch = NO)
 
+        instructionFrame.instructionTreeview.heading("#0", text = "", anchor = CENTER)
+        instructionFrame.instructionTreeview.heading("CPU", text = "CPU", anchor = CENTER)
+        instructionFrame.instructionTreeview.heading("Instruction", text = "Instruction", anchor = CENTER)
+        instructionFrame.instructionTreeview.heading("Read Miss", text = "Read Miss", anchor = CENTER)
+        instructionFrame.instructionTreeview.heading("Write Miss", text = "Write Miss", anchor = CENTER)
+
+        instructionFrame.instructionTreeview.insert(parent = "", index = "end", iid = 0, text = "", values = ("N0", "WRITE 0b0000; 0x0000", "0", "0"))
+        instructionFrame.instructionTreeview.insert(parent = "", index = "end", iid = 1, text = "", values = ("N1", "WRITE 0b0001; 0x0001", "0", "0"))
+        instructionFrame.instructionTreeview.insert(parent = "", index = "end", iid = 2, text = "", values = ("N2", "WRITE 0b0010; 0x0010", "0", "0"))
+        instructionFrame.instructionTreeview.insert(parent = "", index = "end", iid = 3, text = "", values = ("N3", "WRITE 0b0011; 0x0011", "0", "0"))
+
+        instructionFrame.instructionTreeview.pack(side = LEFT)
+
+        # button frame
+        buttonFrame = Frame(root)
+        buttonFrame.place(anchor = "center", relx = 0.7985, rely = 0.687)
+
+        # step by step button
+        buttonFrame.stepByStepButton = Button(buttonFrame, text = "Step by Step", activebackground = "#FF8000", fg = "white", bg = "#4285f4", font = ("Italic", 13), width = 10, heigh = 1, command = root.stepByStep)
+        buttonFrame.stepByStepButton.pack(padx = 10, pady = 0, side = LEFT)
+
+        # continuos execution button
+        buttonFrame.continuosExecutionButton = Button(buttonFrame, text = "Continuos Execution", activebackground = "#FF8000", fg = "white", bg = "#4285f4", font = ("Italic", 13), width = 20, heigh = 1, command = root.continuosExecution)
+        buttonFrame.continuosExecutionButton.pack(padx = 10, pady = 0, side = LEFT)
+
+        # pause button
+        buttonFrame.pauseButton = Button(buttonFrame, text = "Pause", activebackground = "#FF8000", fg = "white", bg = "#4285f4", font = ("Italic", 13), width = 10, heigh = 1, command = root.pause)
+        buttonFrame.pauseButton.pack(padx = 10, pady = 0, side = LEFT)
+
+        # insert instruction tittle frame
+        insertInstructionTittleFrame = Frame(root)
+        insertInstructionTittleFrame.place(anchor = "center", relx = 0.795, rely = 0.8)
+
+        # CPU label
+        insertInstructionTittleFrame.cpuLabel = Label(insertInstructionTittleFrame, text = "CPU\n(number)", fg =  "#4285f4", font = ("Italic", 14))
+        insertInstructionTittleFrame.cpuLabel.pack(padx = 10, pady = 0, side = LEFT)
         
+        # instruction label
+        insertInstructionTittleFrame.instructionLabel = Label(insertInstructionTittleFrame, text = " Instruction\n (capital)", fg =  "#4285f4", font = ("Italic", 14))
+        insertInstructionTittleFrame.instructionLabel.pack(padx = 10, pady = 0, side = LEFT)
+
+        # direction label
+        insertInstructionTittleFrame.directionLabel = Label(insertInstructionTittleFrame, text = "  Direction\n  (bin)", fg =  "#4285f4", font = ("Italic", 14))
+        insertInstructionTittleFrame.directionLabel.pack(padx = 10, pady = 0, side = LEFT)
+
+        # value label
+        insertInstructionTittleFrame.valueLabel = Label(insertInstructionTittleFrame, text = "     Value\n     (hex)", fg =  "#4285f4", font = ("Italic", 14))
+        insertInstructionTittleFrame.valueLabel.pack(padx = 10, pady = 0, side = LEFT)
+
+        # insert instruction frame
+        insertInstructionFrame = Frame(root)
+        insertInstructionFrame.place(anchor = "center", relx = 0.79999, rely = 0.865)
+
+        # CPU textBox
+        insertInstructionFrame.CpuTextBox = Entry(insertInstructionFrame, width = 10, font = ("Italic", 13))
+        insertInstructionFrame.CpuTextBox.pack(padx = 10, pady = 0, side = LEFT)
+
+        # instruction textBox
+        insertInstructionFrame.instructionTextBox = Entry(insertInstructionFrame, width = 10, font = ("Italic", 13))
+        insertInstructionFrame.instructionTextBox.pack(padx = 10, pady = 0, side = LEFT)
+
+        # direction textBox
+        insertInstructionFrame.directionTextBox = Entry(insertInstructionFrame, width = 10, font = ("Italic", 13))
+        insertInstructionFrame.directionTextBox.pack(padx = 10, pady = 0, side = LEFT)
+
+        # value textBox
+        insertInstructionFrame.valueTextBox = Entry(insertInstructionFrame, width = 10, font = ("Italic", 13))
+        insertInstructionFrame.valueTextBox.pack(padx = 10, pady = 0, side = LEFT)
 
 
 
@@ -234,41 +327,21 @@ class Window(tkinter.Tk):
 
 
 
+    def stepByStep(root):
+        pass
 
+    def continuosExecution(root):
+        pass
 
-
-
-
-
-        
-
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    def pause(root):
+        pass
 
 
 
 
         #Button
-        root.buttonEdit= Button(root, text="Ingresar", activebackground="#4285f4", fg = "white", bg = "#db4437", font = ("Serif", 13), width=20, heigh=3, command=root.edit)
-        root.buttonEdit.place(x=300, y=700)
+        #root.buttonEdit= Button(root, text="Ingresar", activebackground="#4285f4", fg = "white", bg = "#db4437", font = ("Serif", 13), width=20, heigh=3, command=root.edit)
+        #root.buttonEdit.place(x=300, y=700)
 
     def edit(root):
         
