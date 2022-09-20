@@ -365,9 +365,9 @@ class Controller:
 
             value = dictionary.get(memoryDirection)
 
-            bmem = int(memoryDirection, 2)
+            #bmem = int(memoryDirection, 2)
 
-            scache = bmem % SETS
+            scache = memoryDirection % SETS
 
             localBlock = localBlocks[scache]
 
@@ -553,7 +553,7 @@ class CPU:
             return MEMORY_BLOCKS_DIR[7]
 
     """
-    This function generates a number of 4 bits based on poisson
+    This function generates a number of 16 bits based on poisson
     distribution
     """
     def getValue(self):
@@ -561,7 +561,7 @@ class CPU:
         probability = trunc(self.poissonDistribution() * 10000)
 
         while(probability > VALUE_MAX):
-        
+            
             probability = trunc(self.poissonDistribution() * 10000)
 
         return probability
@@ -647,17 +647,49 @@ class CPU:
     This function indicates to the CPU to generate and execute a new instruction
     """
     def threadFunction(self, bus):
-
-        for i in range(0, 1):
         
-            self.generateInstruction()
+        self.generateInstruction()
 
-            print("Generating", self.number)
+        print("Generating", self.number)
 
-            sleep(TIMER)
+        sleep(TIMER)
 
-            self.executeInstruction(bus)
+        self.executeInstruction(bus)
 
-            print("Executing", self.number)
+        print("Executing", self.number)
 
-            sleep(TIMER)
+        sleep(TIMER)
+
+    """
+    This function indicates to the CPU to generate and execute a new instruction step by step
+    """
+    def stepByStep(self, bus):
+        
+        self.generateInstruction()
+
+        print("Generating", self.number)
+
+        sleep(TIMER)
+
+        self.executeInstruction(bus)
+
+        print("Executing", self.number)
+
+        sleep(TIMER)
+
+    """
+    This function indicates to the CPU to generate and execute continuously a new instruction
+    """
+    def continuosExecution(self, bus):
+        
+        #self.generateInstruction()
+
+        #print("Generating", self.number)
+
+        #sleep(TIMER)
+
+        #self.executeInstruction(bus)
+
+        #print("Executing", self.number)
+
+        sleep(TIMER)

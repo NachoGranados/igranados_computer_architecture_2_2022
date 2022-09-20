@@ -36,8 +36,8 @@ class Window(tkinter.Tk):
         root.resizable(False,False)
 
         # title
-        root.title = Label(root, text = "Modelo de Protocolo para Coherencia de Caché en Sistemas Multiprocesador", fg = '#4285f4', font = ("Italic", 25))
-        root.title.place(x = 20, y = 27)
+        root.title = Label(root, text = "Modelo de Protocolo para Coherencia de Caché en Sistemas Multiprocesador", fg = '#4285f4', font = ("Italic", 28))
+        root.title.place(x = 35, y = 27)
 
         # Create an instance of Style widget
         style = ttk.Style()
@@ -104,40 +104,40 @@ class Window(tkinter.Tk):
             number = "B" + str(block.getNumber())
             state = block.getState()
             memoryDirection = "0b" + "{0:04b}".format(block.getMemoryDirection())
-            value = "0x" + "{0:016b}".format(block.getValue())
+            value = "0x" + "{0:016x}".format(block.getValue())
 
             item = (number, state, memoryDirection, value)
 
             values0.append(item)
 
         # cpu frame
-        cpuFrame = Frame(root)
-        cpuFrame.place(anchor='center', relx = 0.5, rely = 0.3)
+        root.cpuFrame = Frame(root)
+        root.cpuFrame.place(anchor='center', relx = 0.5, rely = 0.3)
 
         # cpu columns
         cpuColumns = ("Block", "State", "Direction", "Value")
 
         # treeview cpu0
-        cpuFrame.cpu0Treeview = ttk.Treeview(cpuFrame, columns = cpuColumns, show = "headings", height = 4, selectmode = "none")
+        root.cpuFrame.cpu0Treeview = ttk.Treeview(root.cpuFrame, columns = cpuColumns, show = "headings", height = 4, selectmode = "none")
 
-        cpuFrame.cpu0Treeview.column("#0", width = 0, stretch = NO)
-        cpuFrame.cpu0Treeview.column("Block", anchor = CENTER, width = 50, stretch = NO)
-        cpuFrame.cpu0Treeview.column("State", anchor = CENTER, width = 50, stretch = NO)
-        cpuFrame.cpu0Treeview.column("Direction", anchor = CENTER, width = 80, stretch = NO)
-        cpuFrame.cpu0Treeview.column("Value", anchor = CENTER, width = 130, stretch = NO)
+        root.cpuFrame.cpu0Treeview.column("#0", width = 0, stretch = NO)
+        root.cpuFrame.cpu0Treeview.column("Block", anchor = CENTER, width = 50, stretch = NO)
+        root.cpuFrame.cpu0Treeview.column("State", anchor = CENTER, width = 50, stretch = NO)
+        root.cpuFrame.cpu0Treeview.column("Direction", anchor = CENTER, width = 80, stretch = NO)
+        root.cpuFrame.cpu0Treeview.column("Value", anchor = CENTER, width = 130, stretch = NO)
 
-        cpuFrame.cpu0Treeview.heading("#0", text = "", anchor = CENTER)
-        cpuFrame.cpu0Treeview.heading("Block", text = "Block", anchor = CENTER)
-        cpuFrame.cpu0Treeview.heading("State", text = "State", anchor = CENTER)
-        cpuFrame.cpu0Treeview.heading("Direction", text = "Direction", anchor = CENTER)
-        cpuFrame.cpu0Treeview.heading("Value", text = "Value", anchor = CENTER)
+        root.cpuFrame.cpu0Treeview.heading("#0", text = "", anchor = CENTER)
+        root.cpuFrame.cpu0Treeview.heading("Block", text = "Block", anchor = CENTER)
+        root.cpuFrame.cpu0Treeview.heading("State", text = "State", anchor = CENTER)
+        root.cpuFrame.cpu0Treeview.heading("Direction", text = "Direction", anchor = CENTER)
+        root.cpuFrame.cpu0Treeview.heading("Value", text = "Value", anchor = CENTER)
 
-        cpuFrame.cpu0Treeview.insert(parent = "", index = "end", iid = 0, text = "", values = values0[0])
-        cpuFrame.cpu0Treeview.insert(parent = "", index = "end", iid = 1, text = "", values = values0[1])
-        cpuFrame.cpu0Treeview.insert(parent = "", index = "end", iid = 2, text = "", values = values0[2])
-        cpuFrame.cpu0Treeview.insert(parent = "", index = "end", iid = 3, text = "", values = values0[3])
+        root.cpuFrame.cpu0Treeview.insert(parent = "", index = "end", iid = 0, text = "", values = values0[0])
+        root.cpuFrame.cpu0Treeview.insert(parent = "", index = "end", iid = 1, text = "", values = values0[1])
+        root.cpuFrame.cpu0Treeview.insert(parent = "", index = "end", iid = 2, text = "", values = values0[2])
+        root.cpuFrame.cpu0Treeview.insert(parent = "", index = "end", iid = 3, text = "", values = values0[3])
 
-        cpuFrame.cpu0Treeview.pack(padx = 10, pady = 0, side = LEFT)
+        root.cpuFrame.cpu0Treeview.pack(padx = 10, pady = 0, side = LEFT)
 
         controller1 = root.cpu1.getController()
         cache1 = controller1.getCache()
@@ -149,33 +149,33 @@ class Window(tkinter.Tk):
             number = "B" + str(block.getNumber())
             state = block.getState()
             memoryDirection = "0b" + "{0:04b}".format(block.getMemoryDirection())
-            value = "0x" + "{0:016b}".format(block.getValue())
+            value = "0x" + "{0:016x}".format(block.getValue())
 
             item = (number, state, memoryDirection, value)
 
             values1.append(item)
 
         # treeview cpu1
-        cpuFrame.cpu1Treeview = ttk.Treeview(cpuFrame, columns = cpuColumns, show = "headings", height = 4, selectmode = "none")
+        root.cpuFrame.cpu1Treeview = ttk.Treeview(root.cpuFrame, columns = cpuColumns, show = "headings", height = 4, selectmode = "none")
 
-        cpuFrame.cpu1Treeview.column("#0", width = 0, stretch = NO)
-        cpuFrame.cpu1Treeview.column("Block", anchor = CENTER, width = 50, stretch = NO)
-        cpuFrame.cpu1Treeview.column("State", anchor = CENTER, width = 50, stretch = NO)
-        cpuFrame.cpu1Treeview.column("Direction", anchor = CENTER, width = 80, stretch = NO)
-        cpuFrame.cpu1Treeview.column("Value", anchor = CENTER, width = 130, stretch = NO)
+        root.cpuFrame.cpu1Treeview.column("#0", width = 0, stretch = NO)
+        root.cpuFrame.cpu1Treeview.column("Block", anchor = CENTER, width = 50, stretch = NO)
+        root.cpuFrame.cpu1Treeview.column("State", anchor = CENTER, width = 50, stretch = NO)
+        root.cpuFrame.cpu1Treeview.column("Direction", anchor = CENTER, width = 80, stretch = NO)
+        root.cpuFrame.cpu1Treeview.column("Value", anchor = CENTER, width = 130, stretch = NO)
 
-        cpuFrame.cpu1Treeview.heading("#0", text = "", anchor = CENTER)
-        cpuFrame.cpu1Treeview.heading("Block", text = "Block", anchor = CENTER)
-        cpuFrame.cpu1Treeview.heading("State", text = "State", anchor = CENTER)
-        cpuFrame.cpu1Treeview.heading("Direction", text = "Direction", anchor = CENTER)
-        cpuFrame.cpu1Treeview.heading("Value", text = "Value", anchor = CENTER)
+        root.cpuFrame.cpu1Treeview.heading("#0", text = "", anchor = CENTER)
+        root.cpuFrame.cpu1Treeview.heading("Block", text = "Block", anchor = CENTER)
+        root.cpuFrame.cpu1Treeview.heading("State", text = "State", anchor = CENTER)
+        root.cpuFrame.cpu1Treeview.heading("Direction", text = "Direction", anchor = CENTER)
+        root.cpuFrame.cpu1Treeview.heading("Value", text = "Value", anchor = CENTER)
 
-        cpuFrame.cpu1Treeview.insert(parent = "", index = "end", iid = 0, text = "", values = values1[0])
-        cpuFrame.cpu1Treeview.insert(parent = "", index = "end", iid = 1, text = "", values = values1[1])
-        cpuFrame.cpu1Treeview.insert(parent = "", index = "end", iid = 2, text = "", values = values1[2])
-        cpuFrame.cpu1Treeview.insert(parent = "", index = "end", iid = 3, text = "", values = values1[3])
+        root.cpuFrame.cpu1Treeview.insert(parent = "", index = "end", iid = 0, text = "", values = values1[0])
+        root.cpuFrame.cpu1Treeview.insert(parent = "", index = "end", iid = 1, text = "", values = values1[1])
+        root.cpuFrame.cpu1Treeview.insert(parent = "", index = "end", iid = 2, text = "", values = values1[2])
+        root.cpuFrame.cpu1Treeview.insert(parent = "", index = "end", iid = 3, text = "", values = values1[3])
 
-        cpuFrame.cpu1Treeview.pack(padx = 10, pady = 0, side = LEFT)
+        root.cpuFrame.cpu1Treeview.pack(padx = 10, pady = 0, side = LEFT)
 
         controller2 = root.cpu2.getController()
         cache2 = controller2.getCache()
@@ -187,33 +187,33 @@ class Window(tkinter.Tk):
             number = "B" + str(block.getNumber())
             state = block.getState()
             memoryDirection = "0b" + "{0:04b}".format(block.getMemoryDirection())
-            value = "0x" + "{0:016b}".format(block.getValue())
+            value = "0x" + "{0:016x}".format(block.getValue())
 
             item = (number, state, memoryDirection, value)
 
             values2.append(item)
 
         # treeview cpu2
-        cpuFrame.cpu2Treeview = ttk.Treeview(cpuFrame, columns = cpuColumns, show = "headings", height = 4, selectmode = "none")
+        root.cpuFrame.cpu2Treeview = ttk.Treeview(root.cpuFrame, columns = cpuColumns, show = "headings", height = 4, selectmode = "none")
 
-        cpuFrame.cpu2Treeview.column("#0", width = 0, stretch = NO)
-        cpuFrame.cpu2Treeview.column("Block", anchor = CENTER, width = 50, stretch = NO)
-        cpuFrame.cpu2Treeview.column("State", anchor = CENTER, width = 50, stretch = NO)
-        cpuFrame.cpu2Treeview.column("Direction", anchor = CENTER, width = 80, stretch = NO)
-        cpuFrame.cpu2Treeview.column("Value", anchor = CENTER, width = 130, stretch = NO)
+        root.cpuFrame.cpu2Treeview.column("#0", width = 0, stretch = NO)
+        root.cpuFrame.cpu2Treeview.column("Block", anchor = CENTER, width = 50, stretch = NO)
+        root.cpuFrame.cpu2Treeview.column("State", anchor = CENTER, width = 50, stretch = NO)
+        root.cpuFrame.cpu2Treeview.column("Direction", anchor = CENTER, width = 80, stretch = NO)
+        root.cpuFrame.cpu2Treeview.column("Value", anchor = CENTER, width = 130, stretch = NO)
 
-        cpuFrame.cpu2Treeview.heading("#0", text = "", anchor = CENTER)
-        cpuFrame.cpu2Treeview.heading("Block", text = "Block", anchor = CENTER)
-        cpuFrame.cpu2Treeview.heading("State", text = "State", anchor = CENTER)
-        cpuFrame.cpu2Treeview.heading("Direction", text = "Direction", anchor = CENTER)
-        cpuFrame.cpu2Treeview.heading("Value", text = "Value", anchor = CENTER)
+        root.cpuFrame.cpu2Treeview.heading("#0", text = "", anchor = CENTER)
+        root.cpuFrame.cpu2Treeview.heading("Block", text = "Block", anchor = CENTER)
+        root.cpuFrame.cpu2Treeview.heading("State", text = "State", anchor = CENTER)
+        root.cpuFrame.cpu2Treeview.heading("Direction", text = "Direction", anchor = CENTER)
+        root.cpuFrame.cpu2Treeview.heading("Value", text = "Value", anchor = CENTER)
 
-        cpuFrame.cpu2Treeview.insert(parent = "", index = "end", iid = 0, text = "", values = values2[0])
-        cpuFrame.cpu2Treeview.insert(parent = "", index = "end", iid = 1, text = "", values = values2[1])
-        cpuFrame.cpu2Treeview.insert(parent = "", index = "end", iid = 2, text = "", values = values2[2])
-        cpuFrame.cpu2Treeview.insert(parent = "", index = "end", iid = 3, text = "", values = values2[3])
+        root.cpuFrame.cpu2Treeview.insert(parent = "", index = "end", iid = 0, text = "", values = values2[0])
+        root.cpuFrame.cpu2Treeview.insert(parent = "", index = "end", iid = 1, text = "", values = values2[1])
+        root.cpuFrame.cpu2Treeview.insert(parent = "", index = "end", iid = 2, text = "", values = values2[2])
+        root.cpuFrame.cpu2Treeview.insert(parent = "", index = "end", iid = 3, text = "", values = values2[3])
 
-        cpuFrame.cpu2Treeview.pack(padx = 10, pady = 0, side = LEFT)
+        root.cpuFrame.cpu2Treeview.pack(padx = 10, pady = 0, side = LEFT)
 
         controller3 = root.cpu3.getController()
         cache3 = controller3.getCache()
@@ -225,33 +225,33 @@ class Window(tkinter.Tk):
             number = "B" + str(block.getNumber())
             state = block.getState()
             memoryDirection = "0b" + "{0:04b}".format(block.getMemoryDirection())
-            value = "0x" + "{0:016b}".format(block.getValue())
+            value = "0x" + "{0:016x}".format(block.getValue())
 
             item = (number, state, memoryDirection, value)
 
             values3.append(item)
 
         # treeview cpu3
-        cpuFrame.cpu3Treeview = ttk.Treeview(cpuFrame, columns = cpuColumns, show = "headings", height = 4, selectmode = "none")
+        root.cpuFrame.cpu3Treeview = ttk.Treeview(root.cpuFrame, columns = cpuColumns, show = "headings", height = 4, selectmode = "none")
 
-        cpuFrame.cpu3Treeview.column("#0", width = 0, stretch = NO)
-        cpuFrame.cpu3Treeview.column("Block", anchor = CENTER, width = 50, stretch = NO)
-        cpuFrame.cpu3Treeview.column("State", anchor = CENTER, width = 50, stretch = NO)
-        cpuFrame.cpu3Treeview.column("Direction", anchor = CENTER, width = 80, stretch = NO)
-        cpuFrame.cpu3Treeview.column("Value", anchor = CENTER, width = 130, stretch = NO)
+        root.cpuFrame.cpu3Treeview.column("#0", width = 0, stretch = NO)
+        root.cpuFrame.cpu3Treeview.column("Block", anchor = CENTER, width = 50, stretch = NO)
+        root.cpuFrame.cpu3Treeview.column("State", anchor = CENTER, width = 50, stretch = NO)
+        root.cpuFrame.cpu3Treeview.column("Direction", anchor = CENTER, width = 80, stretch = NO)
+        root.cpuFrame.cpu3Treeview.column("Value", anchor = CENTER, width = 130, stretch = NO)
 
-        cpuFrame.cpu3Treeview.heading("#0", text = "", anchor = CENTER)
-        cpuFrame.cpu3Treeview.heading("Block", text = "Block", anchor = CENTER)
-        cpuFrame.cpu3Treeview.heading("State", text = "State", anchor = CENTER)
-        cpuFrame.cpu3Treeview.heading("Direction", text = "Direction", anchor = CENTER)
-        cpuFrame.cpu3Treeview.heading("Value", text = "Value", anchor = CENTER)
+        root.cpuFrame.cpu3Treeview.heading("#0", text = "", anchor = CENTER)
+        root.cpuFrame.cpu3Treeview.heading("Block", text = "Block", anchor = CENTER)
+        root.cpuFrame.cpu3Treeview.heading("State", text = "State", anchor = CENTER)
+        root.cpuFrame.cpu3Treeview.heading("Direction", text = "Direction", anchor = CENTER)
+        root.cpuFrame.cpu3Treeview.heading("Value", text = "Value", anchor = CENTER)
 
-        cpuFrame.cpu3Treeview.insert(parent = "", index = "end", iid = 0, text = "", values = values3[0])
-        cpuFrame.cpu3Treeview.insert(parent = "", index = "end", iid = 1, text = "", values = values3[1])
-        cpuFrame.cpu3Treeview.insert(parent = "", index = "end", iid = 2, text = "", values = values3[2])
-        cpuFrame.cpu3Treeview.insert(parent = "", index = "end", iid = 3, text = "", values = values3[3])
+        root.cpuFrame.cpu3Treeview.insert(parent = "", index = "end", iid = 0, text = "", values = values3[0])
+        root.cpuFrame.cpu3Treeview.insert(parent = "", index = "end", iid = 1, text = "", values = values3[1])
+        root.cpuFrame.cpu3Treeview.insert(parent = "", index = "end", iid = 2, text = "", values = values3[2])
+        root.cpuFrame.cpu3Treeview.insert(parent = "", index = "end", iid = 3, text = "", values = values3[3])
 
-        cpuFrame.cpu3Treeview.pack(padx = 10, pady = 0, side = LEFT)
+        root.cpuFrame.cpu3Treeview.pack(padx = 10, pady = 0, side = LEFT)
 
         # bus frame
         busFrame = Frame(root)
@@ -273,8 +273,8 @@ class Window(tkinter.Tk):
         busFrame.busTreeview.pack(padx = 0, pady = 0, side = BOTTOM)
 
         # main memory frame
-        mainMemoryFrame = Frame(root)
-        mainMemoryFrame.place(anchor = "center", relx = 0.5, rely = 0.73)
+        root.mainMemoryFrame = Frame(root)
+        root.mainMemoryFrame.place(anchor = "center", relx = 0.5, rely = 0.73)
 
         mainMemoryColumns = ("Direction", "Value")
 
@@ -285,62 +285,58 @@ class Window(tkinter.Tk):
         keyArray = []
 
         for key in keys:
+
             keyArray.append(key)
 
-
-        memoryDirection = "0b" + "{0:04b}".format(block.getMemoryDirection())
-        value = "0x" + "{0:016b}".format(block.getValue())
-
-
         # treeview main memory
-        mainMemoryFrame.mainMemoryTreeview = ttk.Treeview(mainMemoryFrame, columns = mainMemoryColumns, show = "headings", height = 8, selectmode = "none")
+        root.mainMemoryFrame.mainMemoryTreeview = ttk.Treeview(root.mainMemoryFrame, columns = mainMemoryColumns, show = "headings", height = 8, selectmode = "none")
 
-        mainMemoryFrame.mainMemoryTreeview.column("#0", width = 0, stretch = NO)
-        mainMemoryFrame.mainMemoryTreeview.column("Direction", anchor = CENTER, width = 80, stretch = NO)
-        mainMemoryFrame.mainMemoryTreeview.column("Value", anchor = CENTER, width = 130, stretch = NO)
+        root.mainMemoryFrame.mainMemoryTreeview.column("#0", width = 0, stretch = NO)
+        root.mainMemoryFrame.mainMemoryTreeview.column("Direction", anchor = CENTER, width = 80, stretch = NO)
+        root.mainMemoryFrame.mainMemoryTreeview.column("Value", anchor = CENTER, width = 130, stretch = NO)
 
-        mainMemoryFrame.mainMemoryTreeview.heading("#0", text = "", anchor = CENTER)
-        mainMemoryFrame.mainMemoryTreeview.heading("Direction", text = "Direction", anchor = CENTER)
-        mainMemoryFrame.mainMemoryTreeview.heading("Value", text = "Value", anchor = CENTER)
+        root.mainMemoryFrame.mainMemoryTreeview.heading("#0", text = "", anchor = CENTER)
+        root.mainMemoryFrame.mainMemoryTreeview.heading("Direction", text = "Direction", anchor = CENTER)
+        root.mainMemoryFrame.mainMemoryTreeview.heading("Value", text = "Value", anchor = CENTER)
 
-        mainMemoryFrame.mainMemoryTreeview.insert(parent = "", index = "end", iid = 0, text = "", values = ("0b" + "{0:04b}".format(keyArray[0]), "0x" + "{0:016b}".format(dictionary[keyArray[0]])))
-        mainMemoryFrame.mainMemoryTreeview.insert(parent = "", index = "end", iid = 1, text = "", values = ("0b" + "{0:04b}".format(keyArray[1]), "0x" + "{0:016b}".format(dictionary[keyArray[1]])))
-        mainMemoryFrame.mainMemoryTreeview.insert(parent = "", index = "end", iid = 2, text = "", values = ("0b" + "{0:04b}".format(keyArray[2]), "0x" + "{0:016b}".format(dictionary[keyArray[2]])))
-        mainMemoryFrame.mainMemoryTreeview.insert(parent = "", index = "end", iid = 3, text = "", values = ("0b" + "{0:04b}".format(keyArray[3]), "0x" + "{0:016b}".format(dictionary[keyArray[3]])))
-        mainMemoryFrame.mainMemoryTreeview.insert(parent = "", index = "end", iid = 4, text = "", values = ("0b" + "{0:04b}".format(keyArray[4]), "0x" + "{0:016b}".format(dictionary[keyArray[4]])))
-        mainMemoryFrame.mainMemoryTreeview.insert(parent = "", index = "end", iid = 5, text = "", values = ("0b" + "{0:04b}".format(keyArray[5]), "0x" + "{0:016b}".format(dictionary[keyArray[5]])))
-        mainMemoryFrame.mainMemoryTreeview.insert(parent = "", index = "end", iid = 6, text = "", values = ("0b" + "{0:04b}".format(keyArray[6]), "0x" + "{0:016b}".format(dictionary[keyArray[6]])))
-        mainMemoryFrame.mainMemoryTreeview.insert(parent = "", index = "end", iid = 7, text = "", values = ("0b" + "{0:04b}".format(keyArray[7]), "0x" + "{0:016b}".format(dictionary[keyArray[7]])))
+        root.mainMemoryFrame.mainMemoryTreeview.insert(parent = "", index = "end", iid = 0, text = "", values = ("0b" + "{0:04b}".format(keyArray[0]), "0x" + "{0:016x}".format(dictionary[keyArray[0]])))
+        root.mainMemoryFrame.mainMemoryTreeview.insert(parent = "", index = "end", iid = 1, text = "", values = ("0b" + "{0:04b}".format(keyArray[1]), "0x" + "{0:016x}".format(dictionary[keyArray[1]])))
+        root.mainMemoryFrame.mainMemoryTreeview.insert(parent = "", index = "end", iid = 2, text = "", values = ("0b" + "{0:04b}".format(keyArray[2]), "0x" + "{0:016x}".format(dictionary[keyArray[2]])))
+        root.mainMemoryFrame.mainMemoryTreeview.insert(parent = "", index = "end", iid = 3, text = "", values = ("0b" + "{0:04b}".format(keyArray[3]), "0x" + "{0:016x}".format(dictionary[keyArray[3]])))
+        root.mainMemoryFrame.mainMemoryTreeview.insert(parent = "", index = "end", iid = 4, text = "", values = ("0b" + "{0:04b}".format(keyArray[4]), "0x" + "{0:016x}".format(dictionary[keyArray[4]])))
+        root.mainMemoryFrame.mainMemoryTreeview.insert(parent = "", index = "end", iid = 5, text = "", values = ("0b" + "{0:04b}".format(keyArray[5]), "0x" + "{0:016x}".format(dictionary[keyArray[5]])))
+        root.mainMemoryFrame.mainMemoryTreeview.insert(parent = "", index = "end", iid = 6, text = "", values = ("0b" + "{0:04b}".format(keyArray[6]), "0x" + "{0:016x}".format(dictionary[keyArray[6]])))
+        root.mainMemoryFrame.mainMemoryTreeview.insert(parent = "", index = "end", iid = 7, text = "", values = ("0b" + "{0:04b}".format(keyArray[7]), "0x" + "{0:016x}".format(dictionary[keyArray[7]])))
 
-        mainMemoryFrame.mainMemoryTreeview.pack(side = BOTTOM)
+        root.mainMemoryFrame.mainMemoryTreeview.pack(side = BOTTOM)
 
         # instruction frame
-        instructionFrame = Frame(root)
-        instructionFrame.place(anchor = "center", relx = 0.168, rely = 0.75)
+        root.instructionFrame = Frame(root)
+        root.instructionFrame.place(anchor = "center", relx = 0.168, rely = 0.75)
 
         instructionColumns = ("CPU", "Instruction", "Read Miss", "Write Miss")
 
-        # treeview main memory
-        instructionFrame.instructionTreeview = ttk.Treeview(instructionFrame, columns = instructionColumns, show = "headings", height = 4, selectmode = "none")
+        # treeview instruction
+        root.instructionFrame.instructionTreeview = ttk.Treeview(root.instructionFrame, columns = instructionColumns, show = "headings", height = 4, selectmode = "none")
 
-        instructionFrame.instructionTreeview.column("#0", width = 0, stretch = NO)
-        instructionFrame.instructionTreeview.column("CPU", anchor = CENTER, width = 40, stretch = NO)
-        instructionFrame.instructionTreeview.column("Instruction", anchor = CENTER, width = 150, stretch = NO)
-        instructionFrame.instructionTreeview.column("Read Miss", anchor = CENTER, width = 80, stretch = NO)
-        instructionFrame.instructionTreeview.column("Write Miss", anchor = CENTER, width = 80, stretch = NO)
+        root.instructionFrame.instructionTreeview.column("#0", width = 0, stretch = NO)
+        root.instructionFrame.instructionTreeview.column("CPU", anchor = CENTER, width = 40, stretch = NO)
+        root.instructionFrame.instructionTreeview.column("Instruction", anchor = CENTER, width = 200, stretch = NO)
+        root.instructionFrame.instructionTreeview.column("Read Miss", anchor = CENTER, width = 80, stretch = NO)
+        root.instructionFrame.instructionTreeview.column("Write Miss", anchor = CENTER, width = 80, stretch = NO)
 
-        instructionFrame.instructionTreeview.heading("#0", text = "", anchor = CENTER)
-        instructionFrame.instructionTreeview.heading("CPU", text = "CPU", anchor = CENTER)
-        instructionFrame.instructionTreeview.heading("Instruction", text = "Instruction", anchor = CENTER)
-        instructionFrame.instructionTreeview.heading("Read Miss", text = "Read Miss", anchor = CENTER)
-        instructionFrame.instructionTreeview.heading("Write Miss", text = "Write Miss", anchor = CENTER)
+        root.instructionFrame.instructionTreeview.heading("#0", text = "", anchor = CENTER)
+        root.instructionFrame.instructionTreeview.heading("CPU", text = "CPU", anchor = CENTER)
+        root.instructionFrame.instructionTreeview.heading("Instruction", text = "Instruction", anchor = CENTER)
+        root.instructionFrame.instructionTreeview.heading("Read Miss", text = "Read Miss", anchor = CENTER)
+        root.instructionFrame.instructionTreeview.heading("Write Miss", text = "Write Miss", anchor = CENTER)
 
-        instructionFrame.instructionTreeview.insert(parent = "", index = "end", iid = 0, text = "", values = ("N0", None, "0", "0"))
-        instructionFrame.instructionTreeview.insert(parent = "", index = "end", iid = 1, text = "", values = ("N1", None, "0", "0"))
-        instructionFrame.instructionTreeview.insert(parent = "", index = "end", iid = 2, text = "", values = ("N2", None, "0", "0"))
-        instructionFrame.instructionTreeview.insert(parent = "", index = "end", iid = 3, text = "", values = ("N3", None, "0", "0"))
+        root.instructionFrame.instructionTreeview.insert(parent = "", index = "end", iid = 0, text = "", values = ("N0", None, "0", "0"))
+        root.instructionFrame.instructionTreeview.insert(parent = "", index = "end", iid = 1, text = "", values = ("N1", None, "0", "0"))
+        root.instructionFrame.instructionTreeview.insert(parent = "", index = "end", iid = 2, text = "", values = ("N2", None, "0", "0"))
+        root.instructionFrame.instructionTreeview.insert(parent = "", index = "end", iid = 3, text = "", values = ("N3", None, "0", "0"))
 
-        instructionFrame.instructionTreeview.pack(side = LEFT)
+        root.instructionFrame.instructionTreeview.pack(side = LEFT)
 
         # button frame
         buttonFrame = Frame(root)
@@ -379,31 +375,31 @@ class Window(tkinter.Tk):
         insertInstructionTittleFrame.valueLabel.pack(padx = 10, pady = 0, side = LEFT)
 
         # insert instruction frame
-        insertInstructionFrame = Frame(root)
-        insertInstructionFrame.place(anchor = "center", relx = 0.79999, rely = 0.77)
+        root.insertInstructionFrame = Frame(root)
+        root.insertInstructionFrame.place(anchor = "center", relx = 0.79999, rely = 0.77)
 
         # CPU textBox
-        insertInstructionFrame.CpuTextBox = Entry(insertInstructionFrame, width = 10, font = ("Italic", 13))
-        insertInstructionFrame.CpuTextBox.pack(padx = 10, pady = 0, side = LEFT)
+        root.insertInstructionFrame.CpuTextBox = Entry(root.insertInstructionFrame, width = 10, font = ("Italic", 13))
+        root.insertInstructionFrame.CpuTextBox.pack(padx = 10, pady = 0, side = LEFT)
 
         # instruction textBox
-        insertInstructionFrame.instructionTextBox = Entry(insertInstructionFrame, width = 10, font = ("Italic", 13))
-        insertInstructionFrame.instructionTextBox.pack(padx = 10, pady = 0, side = LEFT)
+        root.insertInstructionFrame.instructionTextBox = Entry(root.insertInstructionFrame, width = 10, font = ("Italic", 13))
+        root.insertInstructionFrame.instructionTextBox.pack(padx = 10, pady = 0, side = LEFT)
 
         # direction textBox
-        insertInstructionFrame.directionTextBox = Entry(insertInstructionFrame, width = 10, font = ("Italic", 13))
-        insertInstructionFrame.directionTextBox.pack(padx = 10, pady = 0, side = LEFT)
+        root.insertInstructionFrame.directionTextBox = Entry(root.insertInstructionFrame, width = 10, font = ("Italic", 13))
+        root.insertInstructionFrame.directionTextBox.pack(padx = 10, pady = 0, side = LEFT)
 
         # value textBox
-        insertInstructionFrame.valueTextBox = Entry(insertInstructionFrame, width = 10, font = ("Italic", 13))
-        insertInstructionFrame.valueTextBox.pack(padx = 10, pady = 0, side = LEFT)
+        root.insertInstructionFrame.valueTextBox = Entry(root.insertInstructionFrame, width = 10, font = ("Italic", 13))
+        root.insertInstructionFrame.valueTextBox.pack(padx = 10, pady = 0, side = LEFT)
 
         # load frame
         loadFrame = Frame(root)
         loadFrame.place(anchor = "center", relx = 0.7985, rely = 0.86)
 
         # load button
-        loadFrame.loadButton = Button(loadFrame, text = "Load", activebackground = "#FF8000", fg = "white", bg = "#4285f4", font = ("Italic", 13), width = 20, heigh = 1, command = root.continuosExecution)
+        loadFrame.loadButton = Button(loadFrame, text = "Load", activebackground = "#FF8000", fg = "white", bg = "#4285f4", font = ("Italic", 13), width = 20, heigh = 1, command = root.edit)
         loadFrame.loadButton.pack(padx = 0, pady = 0, side = LEFT)
 
 
@@ -418,17 +414,223 @@ class Window(tkinter.Tk):
 
 
 
+    def updateCpuInformation(root):
 
+        cpuIndex = 0
 
-    def CargarImg(root, nombre):
-        ruta = os.path.join("imagenes", nombre)
-        imagen = PhotoImage(file = ruta)
-        return imagen
+        blockIndex = 0
 
+        for cpu in root.cpuArray:
 
+            controller = cpu.getController()
+
+            cache = controller.getCache()
+
+            blocks = cache.getBlocks()
+
+            for block in blocks:
+
+                number = "B" + str(block.getNumber())
+                state = block.getState()
+                memoryDirection = "0b" + "{0:04b}".format(block.getMemoryDirection())
+                value = "0x" + "{0:016x}".format(block.getValue())
+
+                blockValues = (number, state, memoryDirection, value)
+
+                # block0
+                if(blockIndex == 0):
+
+                    # cpu0
+                    if(cpuIndex == 0):
+
+                        root.cpuFrame.cpu0Treeview.item(blockIndex, text = "", values = blockValues)
+
+                    # cpu1
+                    elif(cpuIndex == 1):
+
+                        root.cpuFrame.cpu1Treeview.item(blockIndex, text = "", values = blockValues)
+
+                    # cpu2
+                    elif(cpuIndex == 2):
+
+                        root.cpuFrame.cpu2Treeview.item(blockIndex, text = "", values = blockValues)
+
+                    # cpu3
+                    else:
+
+                        root.cpuFrame.cpu3Treeview.item(blockIndex, text = "", values = blockValues)
+
+                # block1
+                elif(blockIndex == 1):
+
+                    # cpu0
+                    if(cpuIndex == 0):
+
+                        root.cpuFrame.cpu0Treeview.item(blockIndex, text = "", values = blockValues)
+
+                    # cpu1
+                    elif(cpuIndex == 1):
+
+                        root.cpuFrame.cpu1Treeview.item(blockIndex, text = "", values = blockValues)
+
+                    # cpu2
+                    elif(cpuIndex == 2):
+
+                        root.cpuFrame.cpu2Treeview.item(blockIndex, text = "", values = blockValues)
+
+                    # cpu3
+                    else:
+
+                        root.cpuFrame.cpu3Treeview.item(blockIndex, text = "", values = blockValues)
+
+                # block2
+                elif(blockIndex == 3):
+
+                    # cpu0
+                    if(cpuIndex == 0):
+
+                        root.cpuFrame.cpu0Treeview.item(blockIndex, text = "", values = blockValues)
+
+                    # cpu1
+                    elif(cpuIndex == 1):
+
+                        root.cpuFrame.cpu1Treeview.item(blockIndex, text = "", values = blockValues)
+
+                    # cpu2
+                    elif(cpuIndex == 2):
+
+                        root.cpuFrame.cpu2Treeview.item(blockIndex, text = "", values = blockValues)
+
+                    # cpu3
+                    else:
+
+                        root.cpuFrame.cpu3Treeview.item(blockIndex, text = "", values = blockValues)
+
+                # block3
+                else:
+
+                    # cpu0
+                    if(cpuIndex == 0):
+
+                        root.cpuFrame.cpu0Treeview.item(blockIndex, text = "", values = blockValues)
+
+                    # cpu1
+                    elif(cpuIndex == 1):
+
+                        root.cpuFrame.cpu1Treeview.item(blockIndex, text = "", values = blockValues)
+
+                    # cpu2
+                    elif(cpuIndex == 2):
+
+                        root.cpuFrame.cpu2Treeview.item(blockIndex, text = "", values = blockValues)
+
+                    # cpu3
+                    else:
+
+                        root.cpuFrame.cpu3Treeview.item(blockIndex, text = "", values = blockValues)
+
+                blockIndex += 1
+
+            blockIndex = 0
+
+            cpuIndex += 1
+
+    def updateMainMemoryInformation(root):
+        
+        dictionary = root.mainMemory.getDictionary()
+
+        keys = dictionary.keys()
+
+        keyArray = []
+
+        for key in keys:
+
+            keyArray.append(key)
+
+        index = 0
+
+        for key in keyArray:
+
+            mainMemoryValues = ("0b" + "{0:04b}".format(key), "0x" + "{0:016x}".format(dictionary[key]))
+
+            root.mainMemoryFrame.mainMemoryTreeview.item(index, text = "", values = mainMemoryValues)
+
+            index += 1
+
+    def updateInstructionInformation(root):
+
+        index = 0
+
+        for cpu in root.cpuArray:
+
+            cpuNumber = "N" + str(cpu.getNumber())
+
+            instruction = cpu.getCurrentInstruction()
+
+            operation = instruction.getOperation()
+
+            # calc instruction
+            if(operation == OPERATIONS[0]):
+
+                instruction = operation
+
+            # not calc instruction
+            else:
+
+                memoryDirection = instruction.getMemoryDirection()
+                
+                # read instruction
+                if(operation == OPERATIONS[1]):
+
+                    instruction = operation + "  0b" + "{0:04b}".format(memoryDirection)
+
+                # write instruction
+                else:
+
+                    value = instruction.getValue()
+
+                    instruction = operation + "  0b" + "{0:04b}".format(memoryDirection) + "; " + "0x" + "{0:016x}".format(value)
+
+            controller = cpu.getController()
+
+            readMiss = controller.getReadMiss()
+
+            writeMiss = controller.getWriteMiss()
+
+            instructionValues = (cpuNumber, instruction, readMiss, writeMiss)
+
+            root.instructionFrame.instructionTreeview.item(index, text = "", values = instructionValues)
+
+            index += 1
 
     def stepByStep(root):
-        pass
+        
+        thread0 = Thread(target = root.cpu0.stepByStep, args=(root.bus,))
+        thread1 = Thread(target = root.cpu1.stepByStep, args=(root.bus,))
+        thread2 = Thread(target = root.cpu2.stepByStep, args=(root.bus,))
+        thread3 = Thread(target = root.cpu3.stepByStep, args=(root.bus,))
+
+        # start threads
+        thread0.start()
+        thread1.start()
+        thread2.start()
+        thread3.start()
+
+        # wait until threads are completely executed
+        thread0.join()
+        thread1.join()
+        thread2.join()
+        thread3.join()
+
+        root.updateCpuInformation()
+
+        root.updateMainMemoryInformation()
+
+        root.updateInstructionInformation()
+
+        
+
+
 
     def continuosExecution(root):
         pass
@@ -436,22 +638,29 @@ class Window(tkinter.Tk):
     def pause(root):
         pass
 
+    def load(root):
+        pass
+
     def edit(root):
         
         #selected_item = root.cpu0Treeview.focus()
 
-        selected_item0 = root.cpuFrame.cpu0Treeview.item(0)
-        selected_item1 = root.cpuFrame.cpu0Treeview.item(1)
-        selected_item2 = root.cpuFrame.cpu0Treeview.item(2)
-        selected_item3 = root.cpuFrame.cpu0Treeview.item(3)
+        #selected_item0 = root.cpuFrame.cpu0Treeview.item(0)
+        #selected_item1 = root.cpuFrame.cpu0Treeview.item(1)
+        #selected_item2 = root.cpuFrame.cpu0Treeview.item(2)
+        #selected_item3 = root.cpuFrame.cpu0Treeview.item(3)
+
+        
 
         #print(selected_item)
-        print(selected_item0)
-        print(selected_item1)
-        print(selected_item2)
-        print(selected_item3)
+        #print(selected_item0)
+        #print(selected_item1)
+        #print(selected_item2)
+        #print(selected_item3)
 
-        root.cpuFrame.cpu0Treeview.item(0, text="", values=("1", "2", "3", "4"))
+        #root.cpuFrame.cpu0Treeview.item(0, text="", values=("1", "2", "3", "4"))
+
+        root.load()
 
 
 
