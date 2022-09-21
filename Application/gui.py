@@ -24,6 +24,9 @@ class Window(tkinter.Tk):
         # create bus
         root.bus = Bus(root.cpuArray, root.mainMemory)
 
+        # pause flag
+        root.pauseFlag = 0
+
         tkinter.Tk.__init__(root)
 
         # window title
@@ -112,7 +115,7 @@ class Window(tkinter.Tk):
 
         # cpu frame
         root.cpuFrame = Frame(root)
-        root.cpuFrame.place(anchor='center', relx = 0.5, rely = 0.3)
+        root.cpuFrame.place(anchor = "center", relx = 0.5, rely = 0.3)
 
         # cpu columns
         cpuColumns = ("Block", "State", "Direction", "Value")
@@ -321,7 +324,7 @@ class Window(tkinter.Tk):
 
         root.instructionFrame.instructionTreeview.column("#0", width = 0, stretch = NO)
         root.instructionFrame.instructionTreeview.column("CPU", anchor = CENTER, width = 40, stretch = NO)
-        root.instructionFrame.instructionTreeview.column("Instruction", anchor = CENTER, width = 200, stretch = NO)
+        root.instructionFrame.instructionTreeview.column("Instruction", anchor = CENTER, width = 220, stretch = NO)
         root.instructionFrame.instructionTreeview.column("Read Miss", anchor = CENTER, width = 80, stretch = NO)
         root.instructionFrame.instructionTreeview.column("Write Miss", anchor = CENTER, width = 80, stretch = NO)
 
@@ -399,20 +402,8 @@ class Window(tkinter.Tk):
         loadFrame.place(anchor = "center", relx = 0.7985, rely = 0.86)
 
         # load button
-        loadFrame.loadButton = Button(loadFrame, text = "Load", activebackground = "#FF8000", fg = "white", bg = "#4285f4", font = ("Italic", 13), width = 20, heigh = 1, command = root.edit)
+        loadFrame.loadButton = Button(loadFrame, text = "Load", activebackground = "#FF8000", fg = "white", bg = "#4285f4", font = ("Italic", 13), width = 20, heigh = 1, command = root.load)
         loadFrame.loadButton.pack(padx = 0, pady = 0, side = LEFT)
-
-
-
-
-
-
-
-
-
-
-
-
 
     def updateCpuInformation(root):
 
@@ -603,12 +594,28 @@ class Window(tkinter.Tk):
 
             index += 1
 
+    def threadFunction(root, cpu):
+    
+        cpu.generateInstruction()       
+
+        sleep(TIMER)
+
+        root.updateInstructionInformation()
+
+        cpu.executeInstruction(root.bus)
+
+        sleep(TIMER)
+
+        root.updateCpuInformation()
+
+        root.updateMainMemoryInformation()
+
     def stepByStep(root):
         
-        thread0 = Thread(target = root.cpu0.stepByStep, args=(root.bus,))
-        thread1 = Thread(target = root.cpu1.stepByStep, args=(root.bus,))
-        thread2 = Thread(target = root.cpu2.stepByStep, args=(root.bus,))
-        thread3 = Thread(target = root.cpu3.stepByStep, args=(root.bus,))
+        thread0 = Thread(target = root.threadFunction, args = (root.cpu0,))
+        thread1 = Thread(target = root.threadFunction, args = (root.cpu1,))
+        thread2 = Thread(target = root.threadFunction, args = (root.cpu2,))
+        thread3 = Thread(target = root.threadFunction, args = (root.cpu3,))
 
         # start threads
         thread0.start()
@@ -616,51 +623,49 @@ class Window(tkinter.Tk):
         thread2.start()
         thread3.start()
 
-        # wait until threads are completely executed
-        thread0.join()
-        thread1.join()
-        thread2.join()
-        thread3.join()
+    def continuosExecutionThread(root):
 
-        root.updateCpuInformation()
+        root.pauseFlag = 0
 
-        root.updateMainMemoryInformation()
+        while(root.pauseFlag == 0):
 
-        root.updateInstructionInformation()
+            # create threads
+            thread0 = Thread(target = root.threadFunction, args = (root.cpu0,))
+            thread1 = Thread(target = root.threadFunction, args = (root.cpu1,))
+            thread2 = Thread(target = root.threadFunction, args = (root.cpu2,))
+            thread3 = Thread(target = root.threadFunction, args = (root.cpu3,))
 
-        
+            # start threads
+            thread0.start()
+            thread1.start()
+            thread2.start()
+            thread3.start()
 
+            sleep(TIMER * 2)
 
+        print("STOP")
 
     def continuosExecution(root):
-        pass
+
+        # create thread
+        continuosExecutionThread = Thread(target = root.continuosExecutionThread)
+
+        # start thread
+        continuosExecutionThread.start()
 
     def pause(root):
-        pass
+        
+        root.pauseFlag = 1
+
+
+
+
+
 
     def load(root):
         pass
 
-    def edit(root):
-        
-        #selected_item = root.cpu0Treeview.focus()
 
-        #selected_item0 = root.cpuFrame.cpu0Treeview.item(0)
-        #selected_item1 = root.cpuFrame.cpu0Treeview.item(1)
-        #selected_item2 = root.cpuFrame.cpu0Treeview.item(2)
-        #selected_item3 = root.cpuFrame.cpu0Treeview.item(3)
-
-        
-
-        #print(selected_item)
-        #print(selected_item0)
-        #print(selected_item1)
-        #print(selected_item2)
-        #print(selected_item3)
-
-        #root.cpuFrame.cpu0Treeview.item(0, text="", values=("1", "2", "3", "4"))
-
-        root.load()
 
 
 
@@ -703,4 +708,3 @@ thread3.join()
 
 # window loop
 Window().mainloop()
-
