@@ -444,6 +444,7 @@ class CPU:
         self.number = number        
         self.currentInstruction = None
         self.controller = None
+        self.loaded = 0
 
         self.assignResources()
 
@@ -464,6 +465,12 @@ class CPU:
 
     def setController(self, controller):
         self.controller = controller
+
+    def getLoaded(self):
+        return self.loaded
+
+    def setLoaded(self, loaded):
+        self.loaded = loaded
 
     """
     This function calculates the poisson distribution based on

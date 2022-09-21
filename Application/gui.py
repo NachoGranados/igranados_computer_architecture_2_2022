@@ -25,7 +25,7 @@ class Window(tkinter.Tk):
         root.bus = Bus(root.cpuArray, root.mainMemory)
 
         # pause flag
-        root.pauseFlag = 0
+        root.pauseFlag = 1
 
         tkinter.Tk.__init__(root)
 
@@ -365,9 +365,9 @@ class Window(tkinter.Tk):
         insertInstructionTittleFrame.cpuLabel = Label(insertInstructionTittleFrame, text = "CPU\n(number)", fg =  "#4285f4", font = ("Italic", 14))
         insertInstructionTittleFrame.cpuLabel.pack(padx = 10, pady = 0, side = LEFT)
         
-        # instruction label
-        insertInstructionTittleFrame.instructionLabel = Label(insertInstructionTittleFrame, text = " Instruction\n (capital)", fg =  "#4285f4", font = ("Italic", 14))
-        insertInstructionTittleFrame.instructionLabel.pack(padx = 10, pady = 0, side = LEFT)
+        # operation label
+        insertInstructionTittleFrame.operationLabel = Label(insertInstructionTittleFrame, text = " Operation\n (capital)", fg =  "#4285f4", font = ("Italic", 14))
+        insertInstructionTittleFrame.operationLabel.pack(padx = 10, pady = 0, side = LEFT)
 
         # direction label
         insertInstructionTittleFrame.directionLabel = Label(insertInstructionTittleFrame, text = "  Direction\n  (bin)", fg =  "#4285f4", font = ("Italic", 14))
@@ -385,9 +385,9 @@ class Window(tkinter.Tk):
         root.insertInstructionFrame.CpuTextBox = Entry(root.insertInstructionFrame, width = 10, font = ("Italic", 13))
         root.insertInstructionFrame.CpuTextBox.pack(padx = 10, pady = 0, side = LEFT)
 
-        # instruction textBox
-        root.insertInstructionFrame.instructionTextBox = Entry(root.insertInstructionFrame, width = 10, font = ("Italic", 13))
-        root.insertInstructionFrame.instructionTextBox.pack(padx = 10, pady = 0, side = LEFT)
+        # operation textBox
+        root.insertInstructionFrame.operationTextBox = Entry(root.insertInstructionFrame, width = 10, font = ("Italic", 13))
+        root.insertInstructionFrame.operationTextBox.pack(padx = 10, pady = 0, side = LEFT)
 
         # direction textBox
         root.insertInstructionFrame.directionTextBox = Entry(root.insertInstructionFrame, width = 10, font = ("Italic", 13))
@@ -595,10 +595,18 @@ class Window(tkinter.Tk):
             index += 1
 
     def threadFunction(root, cpu):
-    
-        cpu.generateInstruction()       
 
-        sleep(TIMER)
+        # not loaded instruction
+        if(cpu.getLoaded() == 0):
+    
+            cpu.generateInstruction()          
+
+            sleep(TIMER)
+
+        # loaded instruction
+        else:
+
+            cpu.setLoaded(0)
 
         cpu.executeInstruction(root.bus)
 
@@ -643,8 +651,6 @@ class Window(tkinter.Tk):
 
             sleep(TIMER * 2)
 
-        print("STOP")
-
     def continuosExecution(root):
 
         # create thread
@@ -657,90 +663,41 @@ class Window(tkinter.Tk):
         
         root.pauseFlag = 1
 
-
-
-
-
-
     def load(root):
 
-        if(root.pause == 1):
+        if(root.pauseFlag == 1):
         
             # get data
-            cpuNumber = root.insertInstructionFrame.CpuTextBox.get()
-            instruction = root.insertInstructionFrame.instructionTextBox.get()
+            cpuNumber = int(root.insertInstructionFrame.CpuTextBox.get())
+            operation = root.insertInstructionFrame.operationTextBox.get()
             memoryDirection = root.insertInstructionFrame.directionTextBox.get()
             value = root.insertInstructionFrame.valueTextBox.get()
 
+            cpu = root.cpuArray[cpuNumber]
+
+            cpu.setLoaded(1)
+
+            loadInstruction = Instruction(cpuNumber, operation)
+
+            if(memoryDirection != ""):
+
+                memoryDirection = int(memoryDirection, 2)
+
+                loadInstruction.setMemoryDirection(memoryDirection)
+
+            if(value != ""):
+    
+                value = int(value, 16)
+
+                loadInstruction.setValue(value)
+
+            cpu.setCurrentInstruction(loadInstruction)
+
             # clear textBoxes
             root.insertInstructionFrame.CpuTextBox.delete(0, END)
-            root.insertInstructionFrame.instructionTextBox.delete(0, END)
+            root.insertInstructionFrame.operationTextBox.delete(0, END)
             root.insertInstructionFrame.directionTextBox.delete(0, END)
             root.insertInstructionFrame.valueTextBox.delete(0, END)
-
-
-            print(cpuNumber)
-            print(instruction)
-            print(memoryDirection)
-            print(value)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-"""
-# create CPUs
-cpu0 = CPU(0)
-cpu1 = CPU(1)
-cpu2 = CPU(2)
-cpu3 = CPU(3)
-
-# create CPUs array
-cpuArray = [cpu0, cpu1, cpu2, cpu3]
-
-# create main memory
-mainMemory = MainMemory()
-
-# create bus
-bus = Bus(cpuArray, mainMemory)
-
-# create threads
-thread0 = Thread(target = cpu0.threadFunction, args=(bus,))
-thread1 = Thread(target = cpu1.threadFunction, args=(bus,))
-thread2 = Thread(target = cpu2.threadFunction, args=(bus,))
-thread3 = Thread(target = cpu3.threadFunction, args=(bus,))
-
-# start threads
-thread0.start()
-thread1.start()
-thread2.start()
-thread3.start()
-
-# wait until threads are completely executed
-thread0.join()
-thread1.join()
-thread2.join()
-thread3.join()
-"""
 
 # window loop
 Window().mainloop()
