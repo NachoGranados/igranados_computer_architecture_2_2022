@@ -729,6 +729,8 @@ class Window(tkinter.Tk):
 
             sleep(TIMER * 2)
 
+        print("Paused")
+
     def continuosExecution(root):
 
         # create thread
