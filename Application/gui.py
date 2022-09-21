@@ -600,11 +600,11 @@ class Window(tkinter.Tk):
 
         sleep(TIMER)
 
-        root.updateInstructionInformation()
-
         cpu.executeInstruction(root.bus)
 
-        sleep(TIMER)
+        root.updateInstructionInformation()
+
+        sleep(TIMER)       
 
         root.updateCpuInformation()
 
@@ -663,7 +663,43 @@ class Window(tkinter.Tk):
 
 
     def load(root):
-        pass
+
+        if(root.pause == 1):
+        
+            # get data
+            cpuNumber = root.insertInstructionFrame.CpuTextBox.get()
+            instruction = root.insertInstructionFrame.instructionTextBox.get()
+            memoryDirection = root.insertInstructionFrame.directionTextBox.get()
+            value = root.insertInstructionFrame.valueTextBox.get()
+
+            # clear textBoxes
+            root.insertInstructionFrame.CpuTextBox.delete(0, END)
+            root.insertInstructionFrame.instructionTextBox.delete(0, END)
+            root.insertInstructionFrame.directionTextBox.delete(0, END)
+            root.insertInstructionFrame.valueTextBox.delete(0, END)
+
+
+            print(cpuNumber)
+            print(instruction)
+            print(memoryDirection)
+            print(value)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

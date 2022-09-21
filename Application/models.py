@@ -365,8 +365,6 @@ class Controller:
 
             value = dictionary.get(memoryDirection)
 
-            #bmem = int(memoryDirection, 2)
-
             scache = memoryDirection % SETS
 
             localBlock = localBlocks[scache]
@@ -399,8 +397,6 @@ class Controller:
         dictionary = mainMemory.getDictionary()
 
         dictionary[memoryDirection] = value
-
-        #bmem = int(memoryDirection, 2)
 
         scache = memoryDirection % SETS
 
@@ -577,24 +573,9 @@ class CPU:
         # create cache
         cache = Cache()
 
-        usedMemoryIndex = []
-
         for i in range(0, 4):
-        
-            memoryIndex = randint(0, 7)
 
-            # blocks 1, 2 and 3
-            if(i > 0):
-            
-                # avoid repeated blocks
-                while(memoryIndex in usedMemoryIndex):
-
-                    memoryIndex = randint(0, 7)
-
-            usedMemoryIndex.append(memoryIndex)
-
-            cacheBlock = CacheBlock(i, INITIAL_CACHE_STATE, MEMORY_BLOCKS_DIR[memoryIndex],
-                                    INITIAL_CACHE_VALUE)
+            cacheBlock = CacheBlock(i, INITIAL_CACHE_STATE, MEMORY_BLOCKS_DIR[0], INITIAL_CACHE_VALUE)
 
             cache.blocks.append(cacheBlock)
 
