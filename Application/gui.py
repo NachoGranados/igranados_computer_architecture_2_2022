@@ -33,7 +33,7 @@ class Window(tkinter.Tk):
         root.title("Proyecto 1")
         
         # size
-        root.geometry("1350x600")
+        root.geometry("1350x700")
 
         # disable resizing
         root.resizable(False,False)
@@ -48,7 +48,7 @@ class Window(tkinter.Tk):
 
         # cpu tittle frame
         cpuTittleFrame = Frame(root)
-        cpuTittleFrame.place(anchor = "center", relx = 0.5, rely = 0.189)
+        cpuTittleFrame.place(anchor = "center", relx = 0.5, rely = 0.17)
 
         # cpu tittle column
         cpuTittleColumn = ("Tittle")
@@ -115,7 +115,7 @@ class Window(tkinter.Tk):
 
         # cpu frame
         root.cpuFrame = Frame(root)
-        root.cpuFrame.place(anchor = "center", relx = 0.5, rely = 0.3)
+        root.cpuFrame.place(anchor = "center", relx = 0.5, rely = 0.27)
 
         # cpu columns
         cpuColumns = ("Block", "State", "Direction", "Value")
@@ -258,7 +258,7 @@ class Window(tkinter.Tk):
 
         # bus frame
         busFrame = Frame(root)
-        busFrame.place(anchor = "center", relx = 0.5, rely = 0.48)
+        busFrame.place(anchor = "center", relx = 0.5, rely = 0.43)
 
         busColumns = ("Bus")
 
@@ -277,7 +277,7 @@ class Window(tkinter.Tk):
 
         # main memory frame
         root.mainMemoryFrame = Frame(root)
-        root.mainMemoryFrame.place(anchor = "center", relx = 0.5, rely = 0.73)
+        root.mainMemoryFrame.place(anchor = "center", relx = 0.5, rely = 0.65)
 
         mainMemoryColumns = ("Direction", "Value")
 
@@ -313,37 +313,99 @@ class Window(tkinter.Tk):
 
         root.mainMemoryFrame.mainMemoryTreeview.pack(side = BOTTOM)
 
-        # instruction frame
-        root.instructionFrame = Frame(root)
-        root.instructionFrame.place(anchor = "center", relx = 0.168, rely = 0.75)
+        # last instruction tittle frame
+        lastInstructionTittleFrame = Frame(root)
+        lastInstructionTittleFrame.place(anchor = "center", relx = 0.168, rely = 0.535)
+
+        # last instruction tittle column
+        lastInstructionTittleColumn = ("Tittle")
+
+        # treeview last instruction
+        lastInstructionTittleFrame.lastInstructionTittle = ttk.Treeview(lastInstructionTittleFrame, columns = lastInstructionTittleColumn, show = "headings", height = 0, selectmode = "none")
+
+        lastInstructionTittleFrame.lastInstructionTittle.column("#0", width = 0, stretch = NO)
+        lastInstructionTittleFrame.lastInstructionTittle.column("Tittle", anchor = CENTER, width = 420, stretch = NO)
+        
+        lastInstructionTittleFrame.lastInstructionTittle.heading("#0", text = "", anchor = CENTER)
+        lastInstructionTittleFrame.lastInstructionTittle.heading("Tittle", text = "Last instructions", anchor = W)
+
+        lastInstructionTittleFrame.lastInstructionTittle.pack(padx = 10, pady = 0, side = LEFT)
+
+        # last instruction frame
+        root.lastInstructionFrame = Frame(root)
+        root.lastInstructionFrame.place(anchor = "center", relx = 0.168, rely = 0.636)
 
         instructionColumns = ("CPU", "Instruction", "Read Miss", "Write Miss")
 
         # treeview instruction
-        root.instructionFrame.instructionTreeview = ttk.Treeview(root.instructionFrame, columns = instructionColumns, show = "headings", height = 4, selectmode = "none")
+        root.lastInstructionFrame.instructionTreeview = ttk.Treeview(root.lastInstructionFrame, columns = instructionColumns, show = "headings", height = 4, selectmode = "none")
 
-        root.instructionFrame.instructionTreeview.column("#0", width = 0, stretch = NO)
-        root.instructionFrame.instructionTreeview.column("CPU", anchor = CENTER, width = 40, stretch = NO)
-        root.instructionFrame.instructionTreeview.column("Instruction", anchor = CENTER, width = 220, stretch = NO)
-        root.instructionFrame.instructionTreeview.column("Read Miss", anchor = CENTER, width = 80, stretch = NO)
-        root.instructionFrame.instructionTreeview.column("Write Miss", anchor = CENTER, width = 80, stretch = NO)
+        root.lastInstructionFrame.instructionTreeview.column("#0", width = 0, stretch = NO)
+        root.lastInstructionFrame.instructionTreeview.column("CPU", anchor = CENTER, width = 40, stretch = NO)
+        root.lastInstructionFrame.instructionTreeview.column("Instruction", anchor = CENTER, width = 220, stretch = NO)
+        root.lastInstructionFrame.instructionTreeview.column("Read Miss", anchor = CENTER, width = 80, stretch = NO)
+        root.lastInstructionFrame.instructionTreeview.column("Write Miss", anchor = CENTER, width = 80, stretch = NO)
 
-        root.instructionFrame.instructionTreeview.heading("#0", text = "", anchor = CENTER)
-        root.instructionFrame.instructionTreeview.heading("CPU", text = "CPU", anchor = CENTER)
-        root.instructionFrame.instructionTreeview.heading("Instruction", text = "Instruction", anchor = CENTER)
-        root.instructionFrame.instructionTreeview.heading("Read Miss", text = "Read Miss", anchor = CENTER)
-        root.instructionFrame.instructionTreeview.heading("Write Miss", text = "Write Miss", anchor = CENTER)
+        root.lastInstructionFrame.instructionTreeview.heading("#0", text = "", anchor = CENTER)
+        root.lastInstructionFrame.instructionTreeview.heading("CPU", text = "CPU", anchor = CENTER)
+        root.lastInstructionFrame.instructionTreeview.heading("Instruction", text = "Instruction", anchor = CENTER)
+        root.lastInstructionFrame.instructionTreeview.heading("Read Miss", text = "Read Miss", anchor = CENTER)
+        root.lastInstructionFrame.instructionTreeview.heading("Write Miss", text = "Write Miss", anchor = CENTER)
 
-        root.instructionFrame.instructionTreeview.insert(parent = "", index = "end", iid = 0, text = "", values = ("N0", None, "0", "0"))
-        root.instructionFrame.instructionTreeview.insert(parent = "", index = "end", iid = 1, text = "", values = ("N1", None, "0", "0"))
-        root.instructionFrame.instructionTreeview.insert(parent = "", index = "end", iid = 2, text = "", values = ("N2", None, "0", "0"))
-        root.instructionFrame.instructionTreeview.insert(parent = "", index = "end", iid = 3, text = "", values = ("N3", None, "0", "0"))
+        root.lastInstructionFrame.instructionTreeview.insert(parent = "", index = "end", iid = 0, text = "", values = ("N0", None, "0", "0"))
+        root.lastInstructionFrame.instructionTreeview.insert(parent = "", index = "end", iid = 1, text = "", values = ("N1", None, "0", "0"))
+        root.lastInstructionFrame.instructionTreeview.insert(parent = "", index = "end", iid = 2, text = "", values = ("N2", None, "0", "0"))
+        root.lastInstructionFrame.instructionTreeview.insert(parent = "", index = "end", iid = 3, text = "", values = ("N3", None, "0", "0"))
 
-        root.instructionFrame.instructionTreeview.pack(side = LEFT)
+        root.lastInstructionFrame.instructionTreeview.pack(side = LEFT)
+
+        # current instruction tittle frame
+        currentInstructionTittleFrame = Frame(root)
+        currentInstructionTittleFrame.place(anchor = "center", relx = 0.168, rely = 0.77)
+
+        # last instruction tittle column
+        currentInstructionTittleColumn = ("Tittle")
+
+        # treeview last instruction
+        currentInstructionTittleFrame.currentInstructionTittle = ttk.Treeview(currentInstructionTittleFrame, columns = currentInstructionTittleColumn, show = "headings", height = 0, selectmode = "none")
+
+        currentInstructionTittleFrame.currentInstructionTittle.column("#0", width = 0, stretch = NO)
+        currentInstructionTittleFrame.currentInstructionTittle.column("Tittle", anchor = CENTER, width = 420, stretch = NO)
+        
+        currentInstructionTittleFrame.currentInstructionTittle.heading("#0", text = "", anchor = CENTER)
+        currentInstructionTittleFrame.currentInstructionTittle.heading("Tittle", text = "Current instructions", anchor = W)
+
+        currentInstructionTittleFrame.currentInstructionTittle.pack(padx = 10, pady = 0, side = LEFT)
+
+        # current instruction frame
+        root.currentInstructionFrame = Frame(root)
+        root.currentInstructionFrame.place(anchor = "center", relx = 0.168, rely = 0.87)
+
+        # treeview instruction
+        root.currentInstructionFrame.instructionTreeview = ttk.Treeview(root.currentInstructionFrame, columns = instructionColumns, show = "headings", height = 4, selectmode = "none")
+
+        root.currentInstructionFrame.instructionTreeview.column("#0", width = 0, stretch = NO)
+        root.currentInstructionFrame.instructionTreeview.column("CPU", anchor = CENTER, width = 40, stretch = NO)
+        root.currentInstructionFrame.instructionTreeview.column("Instruction", anchor = CENTER, width = 220, stretch = NO)
+        root.currentInstructionFrame.instructionTreeview.column("Read Miss", anchor = CENTER, width = 80, stretch = NO)
+        root.currentInstructionFrame.instructionTreeview.column("Write Miss", anchor = CENTER, width = 80, stretch = NO)
+
+        root.currentInstructionFrame.instructionTreeview.heading("#0", text = "", anchor = CENTER)
+        root.currentInstructionFrame.instructionTreeview.heading("CPU", text = "CPU", anchor = CENTER)
+        root.currentInstructionFrame.instructionTreeview.heading("Instruction", text = "Instruction", anchor = CENTER)
+        root.currentInstructionFrame.instructionTreeview.heading("Read Miss", text = "Read Miss", anchor = CENTER)
+        root.currentInstructionFrame.instructionTreeview.heading("Write Miss", text = "Write Miss", anchor = CENTER)
+
+        root.currentInstructionFrame.instructionTreeview.insert(parent = "", index = "end", iid = 0, text = "", values = ("N0", None, "0", "0"))
+        root.currentInstructionFrame.instructionTreeview.insert(parent = "", index = "end", iid = 1, text = "", values = ("N1", None, "0", "0"))
+        root.currentInstructionFrame.instructionTreeview.insert(parent = "", index = "end", iid = 2, text = "", values = ("N2", None, "0", "0"))
+        root.currentInstructionFrame.instructionTreeview.insert(parent = "", index = "end", iid = 3, text = "", values = ("N3", None, "0", "0"))
+
+        root.currentInstructionFrame.instructionTreeview.pack(side = LEFT)
 
         # button frame
         buttonFrame = Frame(root)
-        buttonFrame.place(anchor = "center", relx = 0.7985, rely = 0.6)
+        buttonFrame.place(anchor = "center", relx = 0.7985, rely = 0.539)
 
         # step by step button
         buttonFrame.stepByStepButton = Button(buttonFrame, text = "Step by Step", activebackground = "#FF8000", fg = "white", bg = "#4285f4", font = ("Italic", 13), width = 10, heigh = 1, command = root.stepByStep)
@@ -359,7 +421,7 @@ class Window(tkinter.Tk):
 
         # insert instruction tittle frame
         insertInstructionTittleFrame = Frame(root)
-        insertInstructionTittleFrame.place(anchor = "center", relx = 0.795, rely = 0.7)
+        insertInstructionTittleFrame.place(anchor = "center", relx = 0.795, rely = 0.625)
 
         # CPU label
         insertInstructionTittleFrame.cpuLabel = Label(insertInstructionTittleFrame, text = "CPU\n(number)", fg =  "#4285f4", font = ("Italic", 14))
@@ -379,7 +441,7 @@ class Window(tkinter.Tk):
 
         # insert instruction frame
         root.insertInstructionFrame = Frame(root)
-        root.insertInstructionFrame.place(anchor = "center", relx = 0.79999, rely = 0.77)
+        root.insertInstructionFrame.place(anchor = "center", relx = 0.79999, rely = 0.685)
 
         # CPU textBox
         root.insertInstructionFrame.CpuTextBox = Entry(root.insertInstructionFrame, width = 10, font = ("Italic", 13))
@@ -399,7 +461,7 @@ class Window(tkinter.Tk):
 
         # load frame
         loadFrame = Frame(root)
-        loadFrame.place(anchor = "center", relx = 0.7985, rely = 0.86)
+        loadFrame.place(anchor = "center", relx = 0.7985, rely = 0.762)
 
         # load button
         loadFrame.loadButton = Button(loadFrame, text = "Load", activebackground = "#FF8000", fg = "white", bg = "#4285f4", font = ("Italic", 13), width = 20, heigh = 1, command = root.load)
@@ -548,7 +610,17 @@ class Window(tkinter.Tk):
 
             index += 1
 
-    def updateInstructionInformation(root):
+    def updateLastInstruction(root):
+
+        for index in range(0, 4):
+
+            current = root.currentInstructionFrame.instructionTreeview.item(index)
+
+            currentValues = tuple(current["values"])
+
+            root.lastInstructionFrame.instructionTreeview.item(index, text = "", values = currentValues)
+
+    def updateCurrentInstruction(root):
 
         index = 0
 
@@ -558,43 +630,49 @@ class Window(tkinter.Tk):
 
             instruction = cpu.getCurrentInstruction()
 
-            operation = instruction.getOperation()
+            if(instruction is not None):
 
-            # calc instruction
-            if(operation == OPERATIONS[0]):
+                operation = instruction.getOperation()
 
-                instruction = operation
+                # calc instruction
+                if(operation == OPERATIONS[0]):
 
-            # not calc instruction
-            else:
+                    instruction = operation
 
-                memoryDirection = instruction.getMemoryDirection()
-                
-                # read instruction
-                if(operation == OPERATIONS[1]):
-
-                    instruction = operation + "  0b" + "{0:04b}".format(memoryDirection)
-
-                # write instruction
+                # not calc instruction
                 else:
 
-                    value = instruction.getValue()
+                    memoryDirection = instruction.getMemoryDirection()
+                    
+                    # read instruction
+                    if(operation == OPERATIONS[1]):
 
-                    instruction = operation + "  0b" + "{0:04b}".format(memoryDirection) + "; " + "0x" + "{0:016x}".format(value)
+                        instruction = operation + "  0b" + "{0:04b}".format(memoryDirection)
 
-            controller = cpu.getController()
+                    # write instruction
+                    else:
 
-            readMiss = controller.getReadMiss()
+                        value = instruction.getValue()
 
-            writeMiss = controller.getWriteMiss()
+                        instruction = operation + "  0b" + "{0:04b}".format(memoryDirection) + "; " + "0x" + "{0:016x}".format(value)
 
-            instructionValues = (cpuNumber, instruction, readMiss, writeMiss)
+                controller = cpu.getController()
 
-            root.instructionFrame.instructionTreeview.item(index, text = "", values = instructionValues)
+                readMiss = controller.getReadMiss()
 
-            index += 1
+                writeMiss = controller.getWriteMiss()
+
+                instructionValues = (cpuNumber, instruction, readMiss, writeMiss)
+
+                root.currentInstructionFrame.instructionTreeview.item(index, text = "", values = instructionValues)
+
+                index += 1
 
     def threadFunction(root, cpu):
+
+        if(cpu.getCurrentInstruction() is not None):
+
+            root.updateLastInstruction()
 
         # not loaded instruction
         if(cpu.getLoaded() == 0):
@@ -608,9 +686,9 @@ class Window(tkinter.Tk):
 
             cpu.setLoaded(0)
 
-        cpu.executeInstruction(root.bus)
+        cpu.executeInstruction(root.bus)        
 
-        root.updateInstructionInformation()
+        root.updateCurrentInstruction()
 
         sleep(TIMER)       
 
@@ -668,36 +746,40 @@ class Window(tkinter.Tk):
         if(root.pauseFlag == 1):
         
             # get data
-            cpuNumber = int(root.insertInstructionFrame.CpuTextBox.get())
+            cpuNumber = root.insertInstructionFrame.CpuTextBox.get()
             operation = root.insertInstructionFrame.operationTextBox.get()
             memoryDirection = root.insertInstructionFrame.directionTextBox.get()
             value = root.insertInstructionFrame.valueTextBox.get()
 
-            cpu = root.cpuArray[cpuNumber]
+            if(cpuNumber != "" and operation != ""):
 
-            cpu.setLoaded(1)
+                cpuNumber = int(cpuNumber)
 
-            loadInstruction = Instruction(cpuNumber, operation)
+                cpu = root.cpuArray[cpuNumber]
 
-            if(memoryDirection != ""):
+                cpu.setLoaded(1)
 
-                memoryDirection = int(memoryDirection, 2)
+                loadInstruction = Instruction(cpuNumber, operation)
 
-                loadInstruction.setMemoryDirection(memoryDirection)
+                if(memoryDirection != ""):
 
-            if(value != ""):
-    
-                value = int(value, 16)
+                    memoryDirection = int(memoryDirection, 2)
 
-                loadInstruction.setValue(value)
+                    loadInstruction.setMemoryDirection(memoryDirection)
 
-            cpu.setCurrentInstruction(loadInstruction)
+                if(value != ""):
+        
+                    value = int(value, 16)
 
-            # clear textBoxes
-            root.insertInstructionFrame.CpuTextBox.delete(0, END)
-            root.insertInstructionFrame.operationTextBox.delete(0, END)
-            root.insertInstructionFrame.directionTextBox.delete(0, END)
-            root.insertInstructionFrame.valueTextBox.delete(0, END)
+                    loadInstruction.setValue(value)
+
+                cpu.setCurrentInstruction(loadInstruction)
+
+                # clear textBoxes
+                root.insertInstructionFrame.CpuTextBox.delete(0, END)
+                root.insertInstructionFrame.operationTextBox.delete(0, END)
+                root.insertInstructionFrame.directionTextBox.delete(0, END)
+                root.insertInstructionFrame.valueTextBox.delete(0, END)
 
 # window loop
 Window().mainloop()
